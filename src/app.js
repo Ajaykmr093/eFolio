@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import db from "./db.js";
 import authRoutes from "./routes/auth.js";
 
 const app = express();
@@ -14,6 +15,10 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
 
-app.listen(port, () => {
-  console.log(`Server listening at port ${port}`);
+db.once("open", () => {
+  console.log("Connected to MongoDB");
+
+  app.listen(port, () => {
+    console.log(`Server listening at port ${port}`);
+  });
 });
