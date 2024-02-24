@@ -2,9 +2,9 @@
   "name": "library-management",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "npm run compile-scss && node app.js",
+    "start": "npm run compile-scss && node src/app.js",
     "compile-scss": "sass --load-path=node_modules/@picocss/pico/scss/ public/sass:public/stylesheets"
   },
   "type": "module",
