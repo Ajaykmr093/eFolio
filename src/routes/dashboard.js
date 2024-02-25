@@ -6,7 +6,12 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const userId = req.session.userId;
   const user = await getUserById(userId);
-  if (user) delete user.password;
+
+  if (!user) {
+    return res.redirect("/auth/login");
+  }
+
+  delete user.password;
   res.render("pages/index", {
     user: user,
   });
