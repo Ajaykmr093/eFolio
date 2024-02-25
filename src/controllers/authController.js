@@ -10,10 +10,18 @@ export async function register(req, res) {
       password: password,
     });
     await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).send(`
+    <div class="info-container">
+      Registeraton sucessful.
+    </div>
+    `);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).send(`
+    <div class="error-container">
+      Internal server error.
+    </div>
+    `);
   }
 }
 
@@ -26,19 +34,31 @@ export async function login(req, res) {
       { email: name.toLowerCase() },
     ]);
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).send(`
+      <div class="warn-container">
+        Invalid credentials.
+      </div>
+      `);
     }
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).send(`
+      <div class="warn-container">
+        Invalid credentials.
+      </div>
+      `);
     }
 
     req.session.userId = user._id;
     return res.redirect("/");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).send(`
+    <div class="error-container">
+      Internal server error.
+    </div>
+    `);
   }
 }
 
