@@ -7,10 +7,25 @@ export async function register(req, res) {
     const { email, username, password } = req.body;
     const user = new User({ email, username, password });
     await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    return res.status(200).render("pages/register", {
+      info: "Registration successful. Please login.",
+      warn: null,
+      error: null
+    });
   } catch (error) {
+    if (error.code === 11000 || error.code === 11001) {
+      return res.status(409).render("pages/register", {
+        info: null,
+        warn: "Email/Username already exists.",
+        error: null
+      });
+    }
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).render("pages/register", {
+      info: null,
+      warn: null,
+      error: "Internal server error",
+    });
   }
 }
 
@@ -18,27 +33,38 @@ export async function login(req, res) {
   try {
     const { name, password } = req.body;
 
-    const user = await User.find().or([{ username: name }, { email: name }]);
+    const user = await User.findOne().or([{ username: name }, { email: name }]);
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).render("pages/login", {
+        info: null,
+        warn: null,
+        error: "Invalid Credentials.",
+      });
     }
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).render("pages/login", {
+        info: null,
+        warn: null,
+        error: "Invalid Credentials.",
+      });
     }
 
     const token = jwt.sign(
       { userId: user._id },
-      "App secret which should be in environment variable or somthing but i am eepy so hard coding this.",
-      {
-        expiresIn: "1h",
-      }
+      "App secret which should be in environment variable or something but I am lazy, so hard coding this.",
+      { expiresIn: "1h" }
     );
 
-    res.json({ token });
+    req.session.token = token;
+    return res.redirect("/");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).render("pages/login", {
+      info: null,
+      warn: null,
+      error: "Internal server error",
+    });
   }
 }

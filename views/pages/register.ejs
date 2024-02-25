@@ -11,6 +11,21 @@
 
 <body style="display: flex; height: 100vh; justify-content: center; align-items: center;">
   <div style="max-width: 500px;">
+    <% if (info) { %>
+      <div class="info-container">
+        <%= info %>
+      </div>
+    <% } %>
+    <% if (warn) { %>
+      <div class="warn-container">
+        <%= warn %>
+      </div>
+    <% } %>
+    <% if (error) { %>
+      <div class="error-container">
+        <%= error %>
+      </div>
+    <% } %>
     <hgroup>
       <h1>Register</h1>
       <h2>Create your account</h2>
@@ -21,7 +36,7 @@
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit" class="contrast">Register</button>
     </form>
-    <p>Already have an account? <a href="login.html">Login here</a></p>
+    <p>Already have an account? <a href="login">Login here</a></p>
   </div>
 </body>
 
