@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 app.use(morgan("dev"));
-app.set("view engine", "ejs");
 
 app.use(
   session({
