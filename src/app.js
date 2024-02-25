@@ -12,8 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 app.use(morgan("dev"));
+app.set("view engine", "ejs");
 
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 
 db.once("open", () => {
   console.log("Connected to MongoDB");
