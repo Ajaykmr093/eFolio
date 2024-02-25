@@ -1,1 +1,32 @@
 @use "pico";
+
+$error-color: #ff4444;
+$info-color: #3399ff;
+$warn-color: #d89700;
+
+.error-container {
+  background-color: rgba($error-color, 0.1);
+  border: 1px solid $error-color;
+  color: $error-color;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: var(--pico-border-radius);
+}
+
+.info-container {
+  background-color: rgba($info-color, 0.1);
+  border: 1px solid $info-color;
+  color: $info-color;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: var(--pico-border-radius);
+}
+
+.warn-container {
+  background-color: rgba($warn-color, 0.1);
+  border: 1px solid $warn-color;
+  color: $warn-color;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: var(--pico-border-radius);
+}
