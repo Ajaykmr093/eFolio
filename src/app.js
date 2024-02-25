@@ -3,7 +3,6 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import db from "./db.js";
 import authRoutes from "./routes/auth.js";
-import dashboardRoutes from "./routes/dashboard.js";
 import session from "express-session";
 
 const app = express();
@@ -24,7 +23,6 @@ app.use(
 );
 
 app.use("/auth", authRoutes);
-app.use("/", dashboardRoutes);
 
 db.once("open", () => {
   console.log("Connected to MongoDB");
