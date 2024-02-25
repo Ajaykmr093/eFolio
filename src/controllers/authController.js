@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export async function register(req, res) {
   try {
@@ -28,7 +28,7 @@ export async function login(req, res) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const token = sign(
+    const token = jwt.sign(
       { userId: user._id },
       "App secret which should be in environment variable or somthing but i am eepy so hard coding this.",
       {
