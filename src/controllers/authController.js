@@ -10,25 +10,10 @@ export async function register(req, res) {
       password: password,
     });
     await user.save();
-    return res.status(200).render("pages/register", {
-      info: "Registration successful. Please login.",
-      warn: null,
-      error: null,
-    });
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    if (error.code === 11000 || error.code === 11001) {
-      return res.status(409).render("pages/register", {
-        info: null,
-        warn: "Email/Username already exists.",
-        error: null,
-      });
-    }
     console.error(error);
-    return res.status(500).render("pages/register", {
-      info: null,
-      warn: null,
-      error: "Internal server error",
-    });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -41,31 +26,19 @@ export async function login(req, res) {
       { email: name.toLowerCase() },
     ]);
     if (!user) {
-      return res.status(401).render("pages/login", {
-        info: null,
-        warn: null,
-        error: "Invalid Credentials.",
-      });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).render("pages/login", {
-        info: null,
-        warn: null,
-        error: "Invalid Credentials.",
-      });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     req.session.userId = user._id;
     return res.redirect("/");
   } catch (error) {
     console.error(error);
-    return res.status(500).render("pages/login", {
-      info: null,
-      warn: null,
-      error: "Internal server error",
-    });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
