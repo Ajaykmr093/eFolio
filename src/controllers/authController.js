@@ -10,14 +10,14 @@ export async function register(req, res) {
       password: password,
     });
     await user.save();
-    res.status(201).send(`
+    res.send(`
     <div class="info-container">
       Registeraton sucessful.
     </div>
     `);
   } catch (error) {
     console.error(error);
-    res.status(500).send(`
+    res.send(`
     <div class="error-container">
       Internal server error.
     </div>
@@ -34,7 +34,7 @@ export async function login(req, res) {
       { email: name.toLowerCase() },
     ]);
     if (!user) {
-      return res.status(401).send(`
+      return res.send(`
       <div class="warn-container">
         Invalid credentials.
       </div>
@@ -43,7 +43,7 @@ export async function login(req, res) {
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).send(`
+      return res.send(`
       <div class="warn-container">
         Invalid credentials.
       </div>
@@ -51,10 +51,11 @@ export async function login(req, res) {
     }
 
     req.session.userId = user._id;
-    return res.redirect("/");
+    res.setHeader('HX-Location', '/');
+    return res.send();
   } catch (error) {
     console.error(error);
-    res.status(500).send(`
+    res.send(`
     <div class="error-container">
       Internal server error.
     </div>
