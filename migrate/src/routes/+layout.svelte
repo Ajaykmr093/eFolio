@@ -14,6 +14,17 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	// SvelteKit Imports
+	import { page } from '$app/stores';
+
+	function matchFooterBlacklist(pageUrlPath: string): boolean {
+		if (pageUrlPath.includes('/auth')) return true;
+		return false;
+	}
+
+	// Disable footer on auth page
+	$: footerVisible = matchFooterBlacklist($page.url.pathname) ? 'hidden' : '';
 </script>
 
 <!-- App Shell -->
@@ -35,7 +46,7 @@
 
 	<!-- Page Footer -->
 	<svelte:fragment slot="pageFooter">
-		<AppBar>
+		<AppBar class={footerVisible}>
 			Built by
 			<a class="anchor" href="https://github.com/Ajaykmr093">Ajay</a>
 			and
