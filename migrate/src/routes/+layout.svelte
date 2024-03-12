@@ -8,7 +8,8 @@
 	import '@fortawesome/fontawesome-free/css/solid.css';
 
 	// Components & Utilities
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, LightSwitch, initializeStores, Toast } from '@skeletonlabs/skeleton';
+	initializeStores();
 
 	// Dependency: Floating UI
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -26,6 +27,9 @@
 	// Disable footer on auth page
 	$: footerVisible = matchFooterBlacklist($page.url.pathname) ? 'hidden' : '';
 </script>
+
+<!-- Overlays -->
+<Toast />
 
 <!-- App Shell -->
 <AppShell>
