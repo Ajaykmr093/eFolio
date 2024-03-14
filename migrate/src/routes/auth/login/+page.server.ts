@@ -11,7 +11,9 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ locals, request, cookies }) => {
+		if (locals.user) redirect(303, '/');
+
 		const form = await superValidate(request, zod(schema));
 		if (!form.valid) return fail(400, { form });
 
