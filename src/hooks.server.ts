@@ -22,6 +22,7 @@ const auth = (async ({ event, resolve }) => {
 				const user = (await db.info().catch(() => {
 					error(500, 'Something wrong with database connection.');
 				})) as User;
+				user.password = undefined;
 				event.locals.user = user;
 			}
 		} else {
