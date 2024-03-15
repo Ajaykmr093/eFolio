@@ -14,6 +14,6 @@ export const logout = async (event: RequestEvent, redirect_to?: string) => {
 	if (redirect_to) {
 		redirect(302, redirect_to);
 	} else {
-		redirect(302, '/login');
+		redirect(302, '/auth/login');
 	}
 };

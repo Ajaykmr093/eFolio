@@ -43,4 +43,11 @@ const auth = (async ({ event, resolve }) => {
 	return response;
 }) satisfies Handle;
 
-export const handle = sequence(auth);
+const logoutHook = (async ({ event, resolve }) => {
+	const logoutRoute = event.url.pathname.includes('/logout');
+	if (logoutRoute) return await logout(event);
+	const response = await resolve(event);
+	return response;
+}) satisfies Handle;
+
+export const handle = sequence(auth, logoutHook);
