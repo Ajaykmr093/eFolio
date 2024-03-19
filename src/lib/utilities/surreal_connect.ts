@@ -1,36 +1,49 @@
-import { PUBLIC_DB_NAME, PUBLIC_DB_NS, PUBLIC_DB_URL } from '$env/static/public';
+import { PUBLIC_DB_NAME, PUBLIC_DB_NS } from '$env/static/public';
 import { Surreal } from 'surrealdb.js';
 
-const MAX_RETRIES = 5;
-const RETRY_TIMEOUT = 2000;
+const MAX_RETRIES = 3;
+const CONNECTION_TIMEOUT = 10000;
 
-export async function connectSurreal(auth?: {
-	username: string;
-	password: string;
-}): Promise<Surreal> {
-	let retries = 1;
+export async function connectSurreal(
+	url: string,
+	auth?: {
+		username: string;
+		password: string;
+	}
+): Promise<Surreal> {
+	async function attemptConnection(retries: number): Promise<Surreal> {
+		if (retries > MAX_RETRIES) {
+			throw new Error('Max retries reached, unable to connect to database.');
+		}
 
-	while (retries <= MAX_RETRIES) {
-		try {
-			if (retries > 1) {
-				console.log(`Database connection retry, attempt ${retries}/${MAX_RETRIES}`);
+		const db = new Surreal({
+			onError: () => {
+				throw Error('Database connection failed.');
 			}
-			const db = new Surreal();
-			await db.connect(PUBLIC_DB_URL, {
-				namespace: PUBLIC_DB_NS,
-				database: PUBLIC_DB_NAME,
-				auth
-			});
+		});
+
+		try {
+			await Promise.race([
+				db.connect(url, {
+					namespace: PUBLIC_DB_NS,
+					database: PUBLIC_DB_NAME,
+					auth
+				}),
+				new Promise((_, reject) =>
+					setTimeout(
+						() => reject(new Error('Connection attempt timed out', { cause: 'timeout' })),
+						CONNECTION_TIMEOUT
+					)
+				)
+			]);
+
 			console.log('Database connection successful.');
 			return db;
 		} catch (error) {
-			console.error('Database connection failed:', error);
-			if (retries === MAX_RETRIES) {
-				throw error;
-			}
-			retries++;
-			await new Promise((resolve) => setTimeout(resolve, RETRY_TIMEOUT));
+			console.error(`Database connection failed: ${(error as Error).message}. Retrying...`);
+			return attemptConnection(retries + 1);
 		}
 	}
-	throw new Error('Max retries reached, unable to connect to database.');
+
+	return attemptConnection(1);
 }
