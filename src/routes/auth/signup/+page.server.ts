@@ -1,6 +1,6 @@
 import { redirect, type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { db } from '$lib/server/surreal';
+import { db } from '$lib/surreal';
 import { message, setError, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 import { schema } from './schema';
