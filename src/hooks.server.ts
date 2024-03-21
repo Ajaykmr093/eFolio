@@ -12,9 +12,9 @@ const auth = (async ({ event, resolve }) => {
 	const secureRoute = event.route.id?.includes('(authenticated)');
 	const authRoute = event.url.pathname.includes('/auth');
 
-	if (token && secureRoute) {
+	if (token) {
 		const authenticated = await db.authenticate(token).catch(async () => {
-			await logout(event);
+			if (secureRoute) await logout(event);
 		});
 
 		if (authenticated) {
@@ -25,13 +25,7 @@ const auth = (async ({ event, resolve }) => {
 				event.locals.user = user;
 			}
 		} else {
-			await logout(event);
-		}
-	}
-
-	if (secureRoute) {
-		if (!event.locals.user || !token) {
-			await logout(event);
+			if (secureRoute) await logout(event);
 		}
 	}
 
