@@ -1,6 +1,6 @@
 import { logout } from '$lib/logout';
+import type { User } from '$lib/schema/user';
 import { db } from '$lib/surreal';
-import type { User } from '$types';
 import { redirect, type Handle, error } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
@@ -22,7 +22,6 @@ const auth = (async ({ event, resolve }) => {
 				const user = (await db.info().catch(() => {
 					error(500, 'Something wrong with database connection.');
 				})) as User;
-				user.password = undefined;
 				event.locals.user = user;
 			}
 		} else {

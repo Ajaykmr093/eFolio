@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AppBar, Avatar } from '@skeletonlabs/skeleton';
 	import logo from '$lib/assets/logo.png';
-	import { type User } from '$types';
+	import type { User } from '$lib/schema/user';
 
 	export let user: User | undefined;
 	let initials: string;

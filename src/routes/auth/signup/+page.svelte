@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
-	import { schema } from './schema';
+	import { signupSchema } from './schema';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { Stepper, Step, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { debounce } from 'throttle-debounce';
 	import { db } from '$lib/surreal';
+	import { z } from 'zod';
 
 	export let data: PageData;
 	const toastStore = getToastStore();
@@ -16,7 +17,7 @@
 	let checkingUsername = false;
 
 	const { form, enhance, errors, message, validate } = superForm(data.form, {
-		validators: zod(schema),
+		validators: zod(signupSchema),
 		taintedMessage: false
 	});
 
@@ -40,16 +41,14 @@
 		validCreds = !a && !b;
 	};
 
-	type UsernameLookup = {
-		id: string;
-		username: string;
-	};
+	type Username = z.infer<typeof signupSchema.shape.username>;
 
 	const checkUsername = () => {
+		if (checkingUsername) return;
 		checkingUsername = true;
-		debounce(300, async () => {
+		debounce(800, async () => {
 			const st = 'SELECT * FROM username_lookup WHERE username = type::string($username)';
-			const query = await db.query<[UsernameLookup[]]>(st, {
+			const query = await db.query<[Username[]]>(st, {
 				username: $form.username.toLowerCase()
 			});
 			const exists = query[0][0];

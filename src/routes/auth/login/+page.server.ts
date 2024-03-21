@@ -3,10 +3,10 @@ import type { PageServerLoad } from './$types';
 import { db } from '$lib/surreal';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
-import { schema } from './schema';
+import { loginSchema } from './schema';
 
 export const load = (async () => {
-	const form = await superValidate(zod(schema));
+	const form = await superValidate(zod(loginSchema));
 	return { form };
 }) satisfies PageServerLoad;
 
@@ -14,7 +14,7 @@ export const actions = {
 	default: async ({ locals, request, cookies }) => {
 		if (locals.user) redirect(303, '/');
 
-		const form = await superValidate(request, zod(schema));
+		const form = await superValidate(request, zod(loginSchema));
 		if (!form.valid) return fail(400, { form });
 
 		const { uid, password, remember } = form.data;

@@ -3,13 +3,13 @@
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { schema } from './schema';
+	import { loginSchema } from './schema';
 
 	export let data: PageData;
 	const toastStore = getToastStore();
 
 	const { form, enhance, errors, message } = superForm(data.form, {
-		validators: zod(schema),
+		validators: zod(loginSchema),
 		taintedMessage: false
 	});
 

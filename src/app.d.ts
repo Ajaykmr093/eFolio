@@ -3,7 +3,7 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		user: import('$types').User | undefined;
+		user: import('$lib/schema/user').User | undefined;
 	}
 	// interface PageData {}
 	// interface Error {}
