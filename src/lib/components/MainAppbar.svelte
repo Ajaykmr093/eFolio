@@ -45,7 +45,7 @@
 			</a>
 		</div>
 		{#if user}
-			<a href="profile"><Avatar {initials} width="w-12" rounded="rounded-full" /></a>
+			<a href="profile"><Avatar {initials} width="w-10" rounded="rounded-full" /></a>
 		{/if}
 	</svelte:fragment>
 </AppBar>
