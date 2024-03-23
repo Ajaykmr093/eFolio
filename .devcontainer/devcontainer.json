@@ -1,28 +1,28 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-	"name": "eFolio Dev",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "name": "eFolio Dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
-	"features": {
-		"ghcr.io/shyim/devcontainers-features/bun:0": {},
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
-	},
+  "features": {
+    "ghcr.io/shyim/devcontainers-features/bun:0": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
 
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-azuretools.vscode-docker",
-				"surrealdb.surrealql",
-				"svelte.svelte-vscode",
-				"esbenp.prettier-vscode",
-				"dbaeumer.vscode-eslint",
-				"eamodio.gitlens"
-			]
-		}
-	},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "surrealdb.surrealql",
+        "svelte.svelte-vscode",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens"
+      ]
+    }
+  },
 
-	"forwardPorts": [8000, 5173],
-	"remoteUser": "root"
+  "forwardPorts": [8000, 5173],
+  "remoteUser": "root"
 }
