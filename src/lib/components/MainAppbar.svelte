@@ -20,7 +20,7 @@
   </svelte:fragment>
   <svelte:fragment slot="trail">
     <div class="flex md:hidden space-x-2">
-      <a class="btn-icon" href="/" title="Browse">
+      <a class="btn-icon" href="/" title="Explore">
         <i class="fa-solid fa-book-open" />
       </a>
       <a class="btn-icon" href="/" title="Your Library">
@@ -31,9 +31,9 @@
       </a>
     </div>
     <div class="hidden md:flex">
-      <a class="btn" href="/" title="Browse">
+      <a class="btn" href="/" title="Explore">
         <i class="fa-solid fa-book-open" />
-        <span>Browse</span>
+        <span>Explore</span>
       </a>
       <a class="btn" href="/" title="Your Library">
         <i class="fa-solid fa-bookmark" />

@@ -17,7 +17,7 @@
       </a>
       <a href="/" class="btn variant-filled w-full">
         <i class="fa-solid fa-book-open" />
-        <span>Browse</span>
+        <span>Explore</span>
       </a>
     </div>
   </div>
@@ -85,7 +85,7 @@
 <hr class="m-8 mt-16" />
 <h2 class="h2 text-center font-bold m-8">Team</h2>
 <div
-  class="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6 m-12 md:m-auto px-4 max-w-screen-xl"
+  class="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-6 md:m-auto px-4 max-w-screen-xl"
 >
   <a class="p-6" href="https://github.com/Ajaykmr093" target="_blank">
     <div class="flex items-center gap-4">
