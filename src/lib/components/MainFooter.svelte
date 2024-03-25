@@ -13,11 +13,17 @@
       </div>
       <p class="text-sm opacity-50 font-light mt-2">Carry Your Stories Everywhere with eFolio</p>
     </div>
-    <div class="space-x-2">
-      <a href="/" class="anchor">Home</a>
-      <a href="/" class="anchor">Explore</a>
-      <a href="/" class="anchor">Your Library</a>
-      <a href="/" class="anchor">Profile</a>
+    <div class="flex flex-col md:flex-row gap-6 md:gap-16">
+      <div class="flex flex-col gap-1">
+        <a href="/" class="anchor">Home</a>
+        <a href="/" class="anchor">Explore</a>
+        <a href="/" class="anchor">Your Library</a>
+        <a href="/" class="anchor">Profile</a>
+      </div>
+      <div class="flex flex-col gap-1">
+        <a href="/" class="anchor">Admin Panel</a>
+        <a href="/" class="anchor">Become a seller</a>
+      </div>
     </div>
   </div>
   <hr class="w-full" />
