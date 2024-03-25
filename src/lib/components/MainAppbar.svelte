@@ -11,15 +11,13 @@
 
 <AppBar>
   <svelte:fragment slot="lead">
-    <strong class="text-xl">
-      <a href="/" class="flex gap-2">
-        <img src={logo} alt="Logo" class="w-6 filter drop-shadow-lg" />
-        <span>eFolio</span>
-      </a>
-    </strong>
+    <div class="flex gap-2">
+      <img src={logo} alt="Logo" class="w-6 object-contain" />
+      <h3 class="h3 font-bold">eFolio</h3>
+    </div>
   </svelte:fragment>
   <svelte:fragment slot="trail">
-    <div class="flex md:hidden space-x-2">
+    <div class="flex md:hidden">
       <a class="btn-icon" href="/" title="Explore">
         <i class="fa-solid fa-book-open" />
       </a>

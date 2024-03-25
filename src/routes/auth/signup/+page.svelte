@@ -59,15 +59,15 @@
   };
 </script>
 
-<div class="w-full h-full flex justify-center items-center">
-  <div class="card w-full sm:max-w-sm m-4 p-6 space-y-4 md:space-y-6 sm:p-8">
+<div class="w-full h-screen flex justify-center items-center">
+  <div class="card w-full max-w-sm m-4 p-6 sm:p-8 space-y-4 md:space-y-6">
     <h3 class="h3 font-bold">Create a new account</h3>
     <form use:enhance method="post">
       <Stepper regionHeader="hidden" buttonCompleteType="submit">
         <!-- Name -->
         <Step regionHeader="hidden" locked={!validName || !usernameAvailable || checkingUsername}>
           <div class="space-y-4 md:space-y-6" on:input={validateName}>
-            <div class="flex space-x-4">
+            <div class="flex gap-4">
               <div class="w-1/2">
                 <label class="label">
                   <p class="font-medium">First Name</p>
@@ -173,7 +173,7 @@
       </Stepper>
     </form>
     <p>
-      <span class="text-sm font-light">Already have an account?</span>
+      <span class="text-sm font-light opacity-90">Already have an account?</span>
       <a href="login" class="anchor text-sm font-medium">Login</a>
     </p>
   </div>
