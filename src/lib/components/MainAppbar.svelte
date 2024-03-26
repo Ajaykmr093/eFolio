@@ -2,11 +2,12 @@
   import { AppBar, Avatar, popup } from '@skeletonlabs/skeleton';
   import logo from '$lib/assets/logo.png';
   import type { User } from '$lib/schema/user';
+  import { enhance } from '$app/forms';
 
   export let user: User | undefined;
   let initials: string;
 
-  if (user) initials = user.name.first[0] + user.name.last[0];
+  $: if (user) initials = user.name.first[0] + user.name.last[0];
 </script>
 
 <AppBar
@@ -32,7 +33,7 @@
       <i class="fa-solid fa-search" />
     </a>
     {#if user}
-      <div class="relative ml-2">
+      <div class="relative flex items-center ml-2">
         <button use:popup={{ event: 'click', target: 'features' }}>
           <Avatar {initials} width="w-10" rounded="rounded-full" />
         </button>
@@ -59,14 +60,22 @@
                 </a>
               </li>
               <li class="text-error-500">
-                <a href="/logout">
-                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                  <span>Logout</span>
-                </a>
+                <form action="/auth/logout" method="post" use:enhance>
+                  <button class="btn w-full justify-start" type="submit">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                  </button>
+                </form>
               </li>
             </ul>
           </nav>
         </div>
+      </div>
+    {:else}
+      <div class="flex items-center">
+        <a class="btn-icon w-10 variant-filled-surface" href="/auth/signup">
+          <i class="fa-solid fa-user" />
+        </a>
       </div>
     {/if}
   </svelte:fragment>

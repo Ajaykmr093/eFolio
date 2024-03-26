@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import type { PageData } from './$types';
+  import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
   import { loginSchema } from './schema';
+  import { onDestroy } from 'svelte';
 
   export let data: PageData;
   const toastStore = getToastStore();
@@ -13,11 +14,15 @@
     taintedMessage: false
   });
 
-  message.subscribe(() => {
+  const unsunbMsg = message.subscribe(() => {
     if ($message) {
       const t: ToastSettings = { message: $message, background: 'variant-filled-error' };
       toastStore.trigger(t);
     }
+  });
+
+  onDestroy(() => {
+    unsunbMsg();
   });
 </script>
 

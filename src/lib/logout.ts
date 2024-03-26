@@ -1,19 +1,15 @@
-import { redirect, type RequestEvent } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
 import { db } from './surreal';
 
-export const logout = async (event: RequestEvent, redirect_to?: string) => {
-  event.locals.user = undefined;
-  event.cookies.set('token', '', {
+export const logout = async (locals: App.Locals, cookies: Cookies) => {
+  locals.user = undefined;
+  cookies.set('token', '', {
     path: '/',
     httpOnly: true,
     sameSite: 'strict',
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     maxAge: -1
   });
   await db.invalidate();
-  if (redirect_to) {
-    redirect(302, redirect_to);
-  } else {
-    redirect(302, '/auth/login');
-  }
+  return redirect(302, '/auth/login');
 };

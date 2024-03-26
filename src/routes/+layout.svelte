@@ -23,10 +23,7 @@
   import Appbar from '$lib/components/MainAppbar.svelte';
   import Footer from '$lib/components/MainFooter.svelte';
 
-  import type { LayoutData } from './$types';
-
-  export let data: LayoutData;
-  const user = data.locals.user;
+  $: user = $page.data.user;
 </script>
 
 <!-- Overlays -->
