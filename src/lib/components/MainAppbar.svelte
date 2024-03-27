@@ -54,10 +54,17 @@
                 </a>
               </li>
               <li>
-                <a href="/">
+                {#if user.seller_id}
+                  <a href="/seller">
+                    <i class="fa-solid fa-shop" />
+                    <span>Seller Portal</span>
+                  </a>
+                {:else}
+                <a href="/seller/apply">
                   <i class="fa-solid fa-shop" />
                   <span>Become a seller</span>
                 </a>
+                {/if}
               </li>
               <li class="text-error-500">
                 <form action="/auth/logout" method="post" use:enhance>

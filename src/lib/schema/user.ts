@@ -10,7 +10,8 @@ export const UserSchema = z.object({
   email: z.string().email('Invalid email'),
   username: z.string().min(4, 'Too short'),
   password: z.string().optional(),
-  created_at: z.date()
+  created_at: z.date(),
+  seller_id: z.string().optional()
 });
 
 export type User = z.infer<typeof UserSchema>;
