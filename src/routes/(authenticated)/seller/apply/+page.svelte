@@ -34,8 +34,8 @@
     : 'AB';
 </script>
 
-<div class="w-full h-screen flex justify-center items-center">
-  <div class="card w-full max-w-sm m-4 p-6 sm:p-8 space-y-4 md:space-y-6">
+<div class="flex h-screen w-full items-center justify-center">
+  <div class="card m-4 w-full max-w-sm space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Apply for seller account</h3>
     <form use:enhance class="flex flex-col gap-4 md:gap-6" method="post">
       <div class="flex items-center justify-center">
@@ -54,7 +54,7 @@
           required
         />
         {#if $errors.name}
-          <div class="text-error-500 text-sm">{$errors.name}</div>
+          <div class="text-sm text-error-500">{$errors.name}</div>
         {/if}
       </label>
       <label class="label">
@@ -70,10 +70,10 @@
           required
         />
         {#if $errors.email}
-          <div class="text-error-500 text-sm">{$errors.email}</div>
+          <div class="text-sm text-error-500">{$errors.email}</div>
         {/if}
       </label>
-      <button type="submit" class="w-full btn variant-filled mt-4">Apply</button>
+      <button type="submit" class="variant-filled btn mt-4 w-full">Apply</button>
     </form>
   </div>
 </div>

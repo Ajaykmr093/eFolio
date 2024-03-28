@@ -26,8 +26,8 @@
   });
 </script>
 
-<div class="w-full h-screen flex justify-center items-center">
-  <div class="card w-full max-w-sm m-4 p-6 sm:p-8 space-y-4 md:space-y-6">
+<div class="flex h-screen w-full items-center justify-center">
+  <div class="card m-4 w-full max-w-sm space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Log in to your account</h3>
     <form use:enhance class="space-y-4 md:space-y-6" method="post">
       <label class="label">
@@ -43,7 +43,7 @@
           required
         />
         {#if $errors.uid}
-          <div class="text-error-500 text-sm">{$errors.uid}</div>
+          <div class="text-sm text-error-500">{$errors.uid}</div>
         {/if}
       </label>
       <label class="label">
@@ -59,7 +59,7 @@
           required
         />
         {#if $errors.password}
-          <div class="text-error-500 text-sm">{$errors.password}</div>
+          <div class="text-sm text-error-500">{$errors.password}</div>
         {/if}
       </label>
       <div class="flex items-center justify-between">
@@ -71,7 +71,7 @@
         </div>
         <!-- <a href="/" class="anchor text-sm font-medium">Forgot password?</a> -->
       </div>
-      <button type="submit" class="w-full btn variant-filled">Login</button>
+      <button type="submit" class="variant-filled btn w-full">Login</button>
     </form>
     <p>
       <span class="text-sm font-light opacity-90">Don't have an account yet?</span>

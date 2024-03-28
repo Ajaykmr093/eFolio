@@ -59,8 +59,8 @@
   };
 </script>
 
-<div class="w-full h-screen flex justify-center items-center">
-  <div class="card w-full max-w-sm m-4 p-6 sm:p-8 space-y-4 md:space-y-6">
+<div class="flex h-screen w-full items-center justify-center">
+  <div class="card m-4 w-full max-w-sm space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Create a new account</h3>
     <form use:enhance method="post">
       <Stepper regionHeader="hidden" buttonCompleteType="submit">
@@ -82,7 +82,7 @@
                     required
                   />
                   {#if $errors.first_name}
-                    <div class="text-error-500 text-sm">{$errors.first_name}</div>
+                    <div class="text-sm text-error-500">{$errors.first_name}</div>
                   {/if}
                 </label>
               </div>
@@ -100,7 +100,7 @@
                     required
                   />
                   {#if $errors.last_name}
-                    <div class="text-error-500 text-sm">{$errors.last_name}</div>
+                    <div class="text-sm text-error-500">{$errors.last_name}</div>
                   {/if}
                 </label>
               </div>
@@ -119,9 +119,9 @@
                 required
               />
               {#if $errors.username}
-                <div class="text-error-500 text-sm">{$errors.username}</div>
+                <div class="text-sm text-error-500">{$errors.username}</div>
               {:else if usernameAvailable == false}
-                <div class="text-error-500 text-sm">Username already taken.</div>
+                <div class="text-sm text-error-500">Username already taken.</div>
               {/if}
             </label>
           </div>
@@ -143,7 +143,7 @@
                 required
               />
               {#if $errors.email}
-                <div class="text-error-500 text-sm">{$errors.email}</div>
+                <div class="text-sm text-error-500">{$errors.email}</div>
               {/if}
             </label>
             <label class="label">
@@ -159,7 +159,7 @@
                 required
               />
               {#if $errors.password}
-                <div class="text-error-500 text-sm">{$errors.password}</div>
+                <div class="text-sm text-error-500">{$errors.password}</div>
               {/if}
             </label>
           </div>
