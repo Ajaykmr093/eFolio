@@ -15,16 +15,16 @@ export const actions = {
     const form = await superValidate(request, zod(SellerApplicationSchema));
     if (!form.valid) return fail(400, { form });
 
-    try {
-      const { email, name, photo } = form.data;
-      const user = locals.user;
+    const { email, name, photo } = form.data;
+    const user = locals.user;
 
-      const token = await db.signup({ scope: 'seller', name, email, photo, user });
-      if (!token) return message(form, 'Authentication failed.', { status: 401 });
-    } catch (err) {
+    const token = await db.signup({ scope: 'seller', name, email, photo, user }).catch((err) => {
       console.error(err);
-      return message(form, 'Somthing went wrong.', { status: 500 });
-    }
+      console.log('Signup failed.');
+      throw message(form, 'Somthing went wrong.', { status: 500 });
+    });
+
+    if (!token) return message(form, 'Authentication failed.', { status: 401 });
 
     return redirect(303, '/seller');
   }

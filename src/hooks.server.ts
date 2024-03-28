@@ -22,13 +22,19 @@ const auth = (async ({ event, resolve }) => {
     return redirect(303, '/');
   }
 
-  const authenticated = await db.authenticate(token).catch(async () => {
-    if (secureRoute) await logout(locals, cookies);
+  const authenticated = await db.authenticate(token).catch(async (err) => {
+    console.error(err);
+    console.log('Failed to authentacate user token.');
+    if (secureRoute) return await logout(locals, cookies);
   });
 
   if (authenticated) {
     if (!event.locals.user) {
-      const user = (await db.info()) as User;
+      const user = (await db.info().catch(async (err) => {
+        console.error(err);
+        console.log('Failed to get uesr info from token.');
+        if (secureRoute) return await logout(locals, cookies);
+      })) as User;
       event.locals.user = user;
     }
   } else {

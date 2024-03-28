@@ -4,45 +4,34 @@ import { Surreal } from 'surrealdb.js';
 const MAX_RETRIES = 3;
 const CONNECTION_TIMEOUT = 10000;
 
-async function connect(
-  url: string,
-  auth?: {
-    username: string;
-    password: string;
-  }
-): Promise<Surreal> {
-  async function attemptConnection(retries: number): Promise<Surreal> {
+async function connect(url: string, auth?: { username: string; password: string }) {
+  async function attemptConnection(retries: number) {
     if (retries > MAX_RETRIES) {
       throw new Error('Max retries reached, unable to connect to database.');
     }
 
-    const db = new Surreal({
-      onError: () => {
-        throw Error('Database connection failed.');
-      }
+    const db = new Surreal();
+
+    await Promise.race([
+      db.connect(url, {
+        namespace: PUBLIC_DB_NS,
+        database: PUBLIC_DB_NAME,
+        auth
+      }),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error('Connection attempt timed out', { cause: 'timeout' })),
+          CONNECTION_TIMEOUT
+        )
+      )
+    ]).catch((err) => {
+      console.log(err);
+      console.log(`Database connection failed. Retrying...`);
+      return attemptConnection(retries + 1);
     });
 
-    try {
-      await Promise.race([
-        db.connect(url, {
-          namespace: PUBLIC_DB_NS,
-          database: PUBLIC_DB_NAME,
-          auth
-        }),
-        new Promise((_, reject) =>
-          setTimeout(
-            () => reject(new Error('Connection attempt timed out', { cause: 'timeout' })),
-            CONNECTION_TIMEOUT
-          )
-        )
-      ]);
-
-      console.log('Database connection successful.');
-      return db;
-    } catch (error) {
-      console.error(`Database connection failed: ${(error as Error).message}. Retrying...`);
-      return attemptConnection(retries + 1);
-    }
+    console.log('Database connection successful.');
+    return db;
   }
 
   return attemptConnection(1);

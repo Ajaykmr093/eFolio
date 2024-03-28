@@ -27,20 +27,22 @@ export const actions = {
       full: `${first_name} ${last_name}`
     };
 
-    try {
-      const st = 'SELECT email FROM ONLY user WHERE email = type::string($email) LIMIT 1';
-      const query = await db.query<[Email]>(st, { email });
-      const exists = query[0];
-      if (exists) return setError(form, 'email', 'Email already exists.');
-    } catch (err) {
-      return message(form, 'Somthing went wrong.', { status: 500 });
-    }
+    const st = 'SELECT email FROM ONLY user WHERE email = type::string($email) LIMIT 1';
 
-    try {
-      await db.signup({ scope: 'user', name, email, username, password });
-    } catch (err) {
-      return message(form, 'Somthing went wrong.', { status: 500 });
-    }
+    const query = await db.query<[Email]>(st, { email }).catch((err) => {
+      console.error(err);
+      console.log('Failed to query email.');
+      throw message(form, 'Somthing went wrong.', { status: 500 });
+    });
+
+    const exists = query[0];
+    if (exists) return setError(form, 'email', 'Email already exists.');
+
+    await db.signup({ scope: 'user', name, email, username, password }).catch((err) => {
+      console.error(err);
+      console.log('Signup failed.');
+      throw message(form, 'Somthing went wrong.', { status: 500 });
+    });
 
     redirect(303, '/auth/login');
   }
