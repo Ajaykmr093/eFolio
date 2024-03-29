@@ -4,17 +4,23 @@
   import devices from '$lib/assets/devices.png';
   import reader from '$lib/assets/reader.png';
   import { Avatar } from '@skeletonlabs/skeleton';
+  import { page } from '$app/stores';
+  import type { User } from '$lib/schema/user';
+
+  $: user = $page.data.user as User;
 </script>
 
 <header class="flex h-70v w-full flex-col items-center justify-center bg-surface-700 p-4">
   <img src={logo} alt="Logo" class="mb-8 h-32 w-32 drop-shadow-lg filter" />
   <h3 class="h3 text-center font-semibold">Carry Your Stories Everywhere with eFolio</h3>
   <div class="mt-8 flex flex-row justify-center gap-4">
-    <a href="/auth/signup" class="variant-filled btn">
-      <i class="fa-solid fa-user-plus" />
-      <span>Get Started</span>
-    </a>
-    <a href="/" class="variant-filled btn">
+    {#if !user}
+      <a href="/auth/signup" class="variant-filled btn">
+        <i class="fa-solid fa-user-plus" />
+        <span>Get Started</span>
+      </a>
+    {/if}
+    <a href="/books" class="variant-filled btn">
       <i class="fa-solid fa-book-open" />
       <span>Explore</span>
     </a>
