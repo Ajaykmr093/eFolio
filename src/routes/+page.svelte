@@ -3,7 +3,6 @@
   import books from '$lib/assets/books.png';
   import devices from '$lib/assets/devices.png';
   import reader from '$lib/assets/reader.png';
-  import { Avatar } from '@skeletonlabs/skeleton';
   import { page } from '$app/stores';
   import type { User } from '$lib/schema/user';
 
@@ -26,36 +25,6 @@
     </a>
   </div>
 </header>
-<h2 class="h2 my-8 text-center font-bold">About</h2>
-<div class="flex flex-col items-center">
-  <div class="flex max-w-screen-lg flex-col items-center justify-center gap-12 px-4">
-    <section>
-      <p class="h6">
-        eFolio is a testament to our exploration and learning journey through the realms of eBooks,
-        eCommerce, and web development. Developed as a university project by Vipul and Ajay, eFolio
-        encapsulates our efforts to grasp the intricacies of these domains.
-      </p>
-    </section>
-    <section>
-      <h5 class="h5 font-bold">Learning Objectives:</h5>
-      <p class="h6">
-        As students eager to expand our knowledge horizon, we chose the topic of eBooks and
-        eCommerce for our project with the aim of gaining hands-on experience in web development,
-        understanding data modeling principles, and exploring the dynamics of digital commerce.
-      </p>
-    </section>
-    <section>
-      <h5 class="h5 font-bold">Behind the Scenes:</h5>
-      <p class="h6">
-        Throughout the development phase of eFolio, we dived into the technical intricacies of
-        creating a functional eBook platform. From designing user interfaces to implementing backend
-        functionalities, every line of code and design choice reflects our journey of discovery and
-        learning.
-      </p>
-    </section>
-  </div>
-</div>
-<hr class="mx-4 mt-12" />
 <h2 class="h2 my-8 text-center font-bold">Features</h2>
 <div class="mx-4 flex flex-col items-center">
   <div
@@ -91,27 +60,33 @@
   </div>
 </div>
 <hr class="mx-4 mt-12" />
-<h2 class="h2 my-8 text-center font-bold">Team</h2>
+<h2 class="h2 my-8 text-center font-bold">About</h2>
 <div class="flex flex-col items-center">
-  <div class="flex max-w-screen-xl flex-col items-center justify-center gap-12 md:flex-row">
-    <a href="https://github.com/Ajaykmr093" target="_blank">
-      <div class="flex items-center gap-4">
-        <Avatar initials="AK" />
-        <div>
-          <h2 class="text-lg font-semibold">Ajay Kumar</h2>
-          <p class="opacity-50">Maintainer</p>
-        </div>
-      </div>
-    </a>
-    <a href="https://github.com/VipulOG" target="_blank">
-      <div class="flex items-center gap-4">
-        <Avatar initials="VT" />
-        <div>
-          <h2 class="text-lg font-semibold">Vipul Tyagi</h2>
-          <p class="opacity-50">Contributor</p>
-        </div>
-      </div>
-    </a>
+  <div class="flex max-w-screen-lg flex-col items-center justify-center gap-12 px-4">
+    <section>
+      <p class="h6">
+        eFolio is a testament to our exploration and learning journey through the realms of eBooks,
+        eCommerce, and web development. Developed as a university project by Vipul and Ajay, eFolio
+        encapsulates our efforts to grasp the intricacies of these domains.
+      </p>
+    </section>
+    <section>
+      <h5 class="h5 font-bold">Learning Objectives:</h5>
+      <p class="h6">
+        As students eager to expand our knowledge horizon, we chose the topic of eBooks and
+        eCommerce for our project with the aim of gaining hands-on experience in web development,
+        understanding data modeling principles, and exploring the dynamics of digital commerce.
+      </p>
+    </section>
+    <section>
+      <h5 class="h5 font-bold">Behind the Scenes:</h5>
+      <p class="h6">
+        Throughout the development phase of eFolio, we dived into the technical intricacies of
+        creating a functional eBook platform. From designing user interfaces to implementing backend
+        functionalities, every line of code and design choice reflects our journey of discovery and
+        learning.
+      </p>
+    </section>
   </div>
 </div>
 <div class="mb-12"></div>
