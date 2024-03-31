@@ -19,16 +19,20 @@ export const actions = {
 
     const { uid, password, remember } = form.data;
 
-    const token = await db.signin({ scope: 'user', uid, password }).catch((err) => {
+    let token: string;
+    try {
+      token = await db.signin({ scope: 'user', uid, password });
+    } catch (err) {
       if ((err as Error).message.includes('No record was returned')) {
-        throw message(form, 'Invalid credentials.', { status: 401 });
+        return message(form, 'Invalid credentials.', { status: 401 });
+      } else {
+        console.error(err);
+        console.log('Signin failed.');
+        return message(form, 'Somthing went wrong.', { status: 500 });
       }
-      console.error(err);
-      console.log('Signin failed.');
-      throw message(form, 'Somthing went wrong.', { status: 500 });
-    });
+    }
 
-    if (!token) throw message(form, 'Authentication failed.', { status: 401 });
+    if (!token) return message(form, 'Authentication failed.', { status: 401 });
 
     const maxAge = remember ? 60 * 60 * 24 * 7 : undefined;
     cookies.set('token', token, {

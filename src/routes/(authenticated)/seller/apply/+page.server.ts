@@ -18,11 +18,14 @@ export const actions = {
     const { email, name, photo } = form.data;
     const user = locals.user;
 
-    const token = await db.signup({ scope: 'seller', name, email, photo, user }).catch((err) => {
+    let token: string;
+    try {
+      token = await db.signup({ scope: 'seller', name, email, photo, user });
+    } catch (err) {
       console.error(err);
       console.log('Signup failed.');
-      throw message(form, 'Somthing went wrong.', { status: 500 });
-    });
+      return message(form, 'Somthing went wrong.', { status: 500 });
+    }
 
     if (!token) return message(form, 'Authentication failed.', { status: 401 });
 
