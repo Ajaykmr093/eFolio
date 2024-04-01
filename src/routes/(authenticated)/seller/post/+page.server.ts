@@ -21,11 +21,11 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const coverPath = `uploads/covers/${form.data.cover.name}`;
+    const coverPath = `uploads/covers/${crypto.randomUUID()}.${form.data.cover.name.split('.').pop()}`;
     const coverBuffer = await form.data.cover.arrayBuffer();
     await Bun.write(coverPath, coverBuffer);
 
-    const bookPath = `uploads/books/${form.data.book.name}`;
+    const bookPath = `uploads/books/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
     const bookBuffer = await form.data.book.arrayBuffer();
     await Bun.write(bookPath, bookBuffer);
 
@@ -65,8 +65,6 @@ export const actions = {
         discount: form.data.discount / 100,
         bookUrl: bookPath
       };
-
-      console.log(vars);
 
       await db.query<[boolean]>(st, vars);
     } catch (err) {
