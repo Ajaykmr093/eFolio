@@ -4,7 +4,7 @@ import { Surreal } from 'surrealdb.js';
 const MAX_RETRIES = 3;
 const CONNECTION_TIMEOUT = 10000;
 
-async function connect(url: string, auth?: { username: string; password: string }) {
+export async function connect(url: string, auth?: { username: string; password: string }) {
   async function attemptConnection(retries: number) {
     if (retries > MAX_RETRIES) {
       throw new Error('Max retries reached, unable to connect to database.');
