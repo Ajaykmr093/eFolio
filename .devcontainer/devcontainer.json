@@ -23,6 +23,5 @@
     }
   },
 
-  "forwardPorts": [8000, 5173],
-  "remoteUser": "root"
+  "forwardPorts": [8000, 5173]
 }
