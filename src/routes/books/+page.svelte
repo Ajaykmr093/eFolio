@@ -4,10 +4,6 @@
   import type { Book } from '$lib/schema/book';
 
   $: recentBooks = $page.data.recentBooks as Book[];
-  $: popularBooks = $page.data.popularBooks as Book[];
-  $: trendingBooks = $page.data.trendingBooks as Book[];
-  $: mostSoldBooks = $page.data.mostSoldBooks as Book[];
-  $: booksByFavouriteAuthor = $page.data.booksByFavouriteAuthor as Book[];
 </script>
 
 <div class="mt-12"></div>
@@ -37,7 +33,8 @@
     {/each}
   </HorizontalScroll>
 </div>
-<div class="mt-12"></div>
+
+<!-- <div class="mt-12"></div>
 <div>
   <div class="px-5 xl:px-14">
     <h4 class="cursor-pointer text-lg font-bold xl:text-[20px]">Trending Books</h4>
@@ -145,4 +142,4 @@
     {/each}
   </HorizontalScroll>
 </div>
-<div class="mt-12"></div>
+<div class="mt-12"></div> -->

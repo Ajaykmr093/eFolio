@@ -1,7 +1,6 @@
 import type { Book } from '$lib/schema/book';
 import { db } from '$lib/server/surreal';
 import type { PageServerLoad } from './$types';
-import { popularBooks, trendingBooks, mostSoldBooks, booksByFavouriteAuthor } from './data';
 
 export const load = (async () => {
   let recentBooks: Book[] = [];
@@ -20,10 +19,6 @@ export const load = (async () => {
     console.log('Failed to query books');
   }
   return {
-    recentBooks,
-    popularBooks,
-    trendingBooks,
-    mostSoldBooks,
-    booksByFavouriteAuthor
+    recentBooks
   };
 }) satisfies PageServerLoad;
