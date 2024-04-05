@@ -18,7 +18,7 @@
   <svelte:fragment slot="lead">
     <a href="/" class="flex gap-2">
       <img src={logo} alt="Logo" class="w-6 object-contain" />
-      <h3 class="h3 font-bold">eFolio</h3>
+      <h3 class="h3 font-bold">eBook</h3>
     </a>
   </svelte:fragment>
   <button
