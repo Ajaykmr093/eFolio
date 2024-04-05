@@ -45,7 +45,7 @@
         <div class="h-[190px] overflow-hidden rounded-lg xl:h-[265px]">
           <img
             class="object-contain brightness-90"
-            src={entry.book.cover?.medium}
+            src={entry.book.cover_url}
             alt="cover"
             title={entry.book.title}
             loading="lazy"

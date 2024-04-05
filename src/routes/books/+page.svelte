@@ -20,7 +20,7 @@
         <div class="h-[190px] overflow-hidden rounded-lg xl:h-[265px]">
           <img
             class="object-cover brightness-90"
-            src={book.cover?.medium}
+            src={book.cover_url}
             alt="cover"
             title={book.title}
             loading="lazy"

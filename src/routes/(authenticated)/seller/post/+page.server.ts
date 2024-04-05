@@ -32,10 +32,8 @@ export const actions = {
     const book: Book = {
       title: form.data.title,
       description: form.data.description,
-      publishDate: form.data.publishDate,
-      cover: {
-        medium: coverPath
-      }
+      publish_date: form.data.publishDate,
+      cover_url: coverPath
     };
 
     try {
