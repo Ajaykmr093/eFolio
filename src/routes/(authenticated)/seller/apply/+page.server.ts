@@ -15,13 +15,16 @@ export const actions = {
     const form = await superValidate(request, zod(SellerApplicationSchema));
     if (!form.valid) return fail(400, { form });
 
-    const { email, name, photo } = form.data;
+    const { email, name } = form.data;
     const user = locals.user;
 
     let token: string;
     try {
-      token = await db.signup({ scope: 'seller', name, email, photo, user });
+      token = await db.signup({ scope: 'seller', name, email, user });
     } catch (err) {
+      if ((err as Error).message.includes('Seller profile already exists')) {
+        return message(form, 'Seller profile already exists.', { status: 401 });
+      }
       console.error(err);
       console.log('Signup failed.');
       return message(form, 'Somthing went wrong.', { status: 500 });
