@@ -2,7 +2,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { SellerBookPostSchema } from './schema';
 import { fail, superValidate, withFiles } from 'sveltekit-superforms';
-import { db } from '$lib/server/surreal';
+import { db } from '$lib/surreal';
 import type { Book } from '$lib/schema/book';
 import { unlink } from 'fs/promises';
 import { redirect } from '@sveltejs/kit';

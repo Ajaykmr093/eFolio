@@ -1,5 +1,5 @@
 import type { Book } from '$lib/schema/book';
-import { db } from '$lib/server/surreal';
+import { db } from '$lib/surreal';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
