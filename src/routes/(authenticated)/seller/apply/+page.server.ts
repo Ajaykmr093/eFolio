@@ -13,14 +13,18 @@ export const load = (async () => {
 export const actions = {
   default: async ({ locals, request }) => {
     const form = await superValidate(request, zod(SellerApplicationSchema));
-    if (!form.valid) return fail(400, { form });
 
-    const { email, name } = form.data;
-    const user = locals.user;
+    if (!form.valid) {
+      return fail(400, { form });
+    }
 
-    let token: string;
     try {
-      token = await db.signup({ scope: 'seller', name, email, user });
+      const { email, name } = form.data;
+      const user = locals.user;
+      const vars = { name, email, user };
+      const token = await db.signup({ scope: 'seller', vars });
+      if (!token) return message(form, 'Authentication failed.', { status: 401 });
+      return redirect(303, '/seller');
     } catch (err) {
       if ((err as Error).message.includes('Seller profile already exists')) {
         return message(form, 'Seller profile already exists.', { status: 401 });
@@ -29,9 +33,5 @@ export const actions = {
       console.log('Signup failed.');
       return message(form, 'Somthing went wrong.', { status: 500 });
     }
-
-    if (!token) return message(form, 'Authentication failed.', { status: 401 });
-
-    return redirect(303, '/seller');
   }
 } satisfies Actions;

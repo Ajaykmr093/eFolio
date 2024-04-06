@@ -8,9 +8,7 @@ import { unlink } from 'fs/promises';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async () => {
-  return {
-    form: await superValidate(zod(SellerBookPostSchema))
-  };
+  return { form: await superValidate(zod(SellerBookPostSchema)) };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -21,28 +19,31 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const coverPath = `uploads/covers/${crypto.randomUUID()}.${form.data.cover.name.split('.').pop()}`;
-    const coverBuffer = await form.data.cover.arrayBuffer();
-    await Bun.write(coverPath, coverBuffer);
-
-    const bookPath = `uploads/books/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
-    const bookBuffer = await form.data.book.arrayBuffer();
-    await Bun.write(bookPath, bookBuffer);
-
-    const book: Book = {
-      title: form.data.title,
-      description: form.data.description,
-      publish_date: form.data.publishDate,
-      cover_url: coverPath
-    };
-
-    const sell = {
-      price: form.data.price,
-      discount: form.data.discount,
-      book_url: bookPath
-    };
+    let coverPath;
+    let bookPath;
 
     try {
+      coverPath = `uploads/covers/${crypto.randomUUID()}.${form.data.cover.name.split('.').pop()}`;
+      const coverBuffer = await form.data.cover.arrayBuffer();
+      await Bun.write(coverPath, coverBuffer);
+
+      bookPath = `uploads/books/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
+      const bookBuffer = await form.data.book.arrayBuffer();
+      await Bun.write(bookPath, bookBuffer);
+
+      const book: Book = {
+        title: form.data.title,
+        description: form.data.description,
+        publish_date: form.data.publishDate,
+        cover_url: coverPath
+      };
+
+      const sell = {
+        price: form.data.price,
+        discount: form.data.discount,
+        book_url: bookPath
+      };
+
       const st = `
         {
           let $book = create only book content {
@@ -63,19 +64,18 @@ export const actions = {
               out: $bookRecord
           };
 
-          return ture;
+          return None;
         };
       `;
       const vars = { bookInfo: book, sellInfo: sell };
-      await db.query<[boolean]>(st, vars);
+      await db.query(st, vars);
+      return redirect(302, '/seller');
     } catch (err) {
       console.error(err);
       console.log('Failed to post book.');
-      await unlink(coverPath);
-      await unlink(bookPath);
+      if (coverPath) await unlink(coverPath);
+      if (bookPath) await unlink(bookPath);
       return message(form, 'Somthing went wrong.', { status: 500 });
     }
-
-    return redirect(302, '/seller');
   }
 };

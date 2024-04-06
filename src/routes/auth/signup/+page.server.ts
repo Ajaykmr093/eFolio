@@ -18,37 +18,33 @@ export const actions = {
     if (locals.user) redirect(303, '/');
 
     const form = await superValidate(request, zod(signupSchema));
-    if (!form.valid) return fail(400, { form });
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
 
     const { username, password, first_name, last_name, email } = form.data;
-    const name = {
-      first: first_name,
-      last: last_name,
-      full: `${first_name} ${last_name}`
-    };
+    const name = { first: first_name, last: last_name, full: `${first_name} ${last_name}` };
 
-    const st = 'SELECT email FROM ONLY user WHERE email = type::string($email) LIMIT 1';
-
-    let query;
     try {
-      query = await db.query<[Email]>(st, { email });
+      const st = 'SELECT email FROM user WHERE email = type::string($email) LIMIT 1';
+      const query = await db.query<[Email[]]>(st, { email });
+      const exists = query[0];
+      if (exists) return setError(form, 'email', 'Email already exists.');
     } catch (err) {
       console.error(err);
       console.log('Failed to query email.');
       return message(form, 'Somthing went wrong.', { status: 500 });
     }
 
-    const exists = query[0];
-    if (exists) return setError(form, 'email', 'Email already exists.');
-
     try {
-      await db.signup({ scope: 'user', name, email, username, password });
+      const token = await db.signup({ scope: 'user', name, email, username, password });
+      if (!token) return message(form, 'Authentication failed.', { status: 401 });
+      return redirect(303, '/auth/login');
     } catch (err) {
       console.error(err);
       console.log('Signup failed.');
       return message(form, 'Somthing went wrong.', { status: 500 });
     }
-
-    redirect(303, '/auth/login');
   }
 } satisfies Actions;

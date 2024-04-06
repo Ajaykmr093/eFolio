@@ -3,7 +3,6 @@ import { db } from '$lib/surreal';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-  let recentBooks: Book[] = [];
   try {
     const st = `
       {
@@ -13,12 +12,10 @@ export const load = (async () => {
       }
     `;
     const res = await db.query<[Book[]]>(st);
-    recentBooks = res[0];
+    const recentBooks = res[0];
+    return { recentBooks };
   } catch (err) {
     console.error(err);
     console.log('Failed to query books');
   }
-  return {
-    recentBooks
-  };
 }) satisfies PageServerLoad;

@@ -11,16 +11,8 @@ export const GET: RequestHandler = async ({ params }) => {
     const file = Bun.file(filePath);
     const data = await file.arrayBuffer();
     const contentType = file.type;
-
-    return new Response(data, {
-      status: 200,
-      headers: {
-        'Content-Type': contentType
-      }
-    });
+    return new Response(data, { status: 200, headers: { 'Content-Type': contentType } });
   } catch (error) {
-    return new Response('File not found', {
-      status: 404
-    });
+    return new Response('File not found', { status: 404 });
   }
 };
