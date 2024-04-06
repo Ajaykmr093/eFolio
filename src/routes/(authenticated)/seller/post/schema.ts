@@ -7,7 +7,8 @@ export const SellerBookPostSchema = z.object({
   publishDate: z.date(),
   price: z.number(),
   discount: z.number().min(0).max(100),
-  book: z.instanceof(File)
+  book: z.instanceof(File),
+  sampleBook: z.instanceof(File),
 });
 
 export type SellerBookPost = z.infer<typeof SellerBookPostSchema>;

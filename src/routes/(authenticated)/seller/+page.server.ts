@@ -15,7 +15,7 @@ export const load = (async ({ locals }) => {
       const st = `
         {
           let $a = SELECT ->sell[*] as entries omit entries.in from only $seller_id;
-          let $b = SELECT *, out.id as book.id, out.title as book.title, out.cover as book.cover omit out from $a.entries;
+          let $b = SELECT *, out.id as book.id, out.title as book.title, out.cover_url as book.cover_url omit out from $a.entries;
           return $b;
         }
       `;

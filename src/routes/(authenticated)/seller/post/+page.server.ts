@@ -5,7 +5,7 @@ import { fail, message, superValidate } from 'sveltekit-superforms';
 import { db } from '$lib/surreal';
 import type { Book } from '$lib/schema/book';
 import { unlink } from 'fs/promises';
-import { redirect } from '@sveltejs/kit';
+import { isRedirect, redirect } from '@sveltejs/kit';
 
 export const load = (async () => {
   return { form: await superValidate(zod(SellerBookPostSchema)) };
@@ -21,12 +21,17 @@ export const actions = {
 
     let coverPath;
     let bookPath;
+    let sampleBookPath;
 
     try {
       coverPath = `uploads/covers/${crypto.randomUUID()}.${form.data.cover.name.split('.').pop()}`;
       const coverBuffer = await form.data.cover.arrayBuffer();
       await Bun.write(coverPath, coverBuffer);
 
+      sampleBookPath = `uploads/samples/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
+      const sampleBookBuffer = await form.data.book.arrayBuffer();
+      await Bun.write(sampleBookPath, sampleBookBuffer);
+      
       bookPath = `uploads/books/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
       const bookBuffer = await form.data.book.arrayBuffer();
       await Bun.write(bookPath, bookBuffer);
@@ -41,7 +46,8 @@ export const actions = {
       const sell = {
         price: form.data.price,
         discount: form.data.discount,
-        book_url: bookPath
+        sample_book_url: sampleBookPath,
+        book_url: bookPath,
       };
 
       const st = `
@@ -60,6 +66,7 @@ export const actions = {
               price: $sellInfo.price,
               discount: $sellInfo.discount,
               book_url: $sellInfo.book_url,
+              sample_book_url: $sellInfo.sample_book_url,
               in: $sellerRecord,
               out: $bookRecord
           };
@@ -71,6 +78,7 @@ export const actions = {
       await db.query(st, vars);
       return redirect(303, '/seller');
     } catch (err) {
+      if (isRedirect(err)) throw err;
       console.error(err);
       console.log('Failed to post book.');
       if (coverPath) await unlink(coverPath);

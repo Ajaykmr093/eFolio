@@ -24,12 +24,13 @@
   });
 
   const fileCover = fileProxy(form, 'cover');
+  const fileSampleBook = fileProxy(form, 'sampleBook');
   const fileBook = fileProxy(form, 'book');
   const datePublish = dateProxy(form, 'publishDate', { format: 'date' });
 </script>
 
 <div class="flex w-full items-center justify-center">
-  <div class="m-4 w-full max-w-xl space-y-4 variant-outline-surface p-6 sm:p-8 md:space-y-6">
+  <div class="variant-outline-surface m-4 w-full max-w-xl space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Create Post</h3>
     <form
       use:enhance
@@ -113,6 +114,13 @@
         />
         {#if $errors.discount}
           <div class="text-sm text-error-500">{$errors.discount}</div>
+        {/if}
+      </label>
+      <label class="label">
+        <p class="font-medium">Sample Book</p>
+        <input type="file" name="sampleBook" bind:files={$fileSampleBook} />
+        {#if $errors.sampleBook}
+          <div class="text-sm text-error-500">{$errors.sampleBook}</div>
         {/if}
       </label>
       <label class="label">
