@@ -14,5 +14,5 @@ export const logout = async (locals: App.Locals, cookies: Cookies) => {
     console.error(err);
     console.log('Failed to invalidate authentication.');
   });
-  return redirect(302, '/auth/login');
+  return redirect(303, '/auth/login');
 };

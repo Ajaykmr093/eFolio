@@ -69,7 +69,7 @@ export const actions = {
       `;
       const vars = { bookInfo: book, sellInfo: sell };
       await db.query(st, vars);
-      return redirect(302, '/seller');
+      return redirect(303, '/seller');
     } catch (err) {
       console.error(err);
       console.log('Failed to post book.');
