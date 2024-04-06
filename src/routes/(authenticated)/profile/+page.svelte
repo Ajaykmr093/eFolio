@@ -8,7 +8,7 @@
   $: initials = user.name.first[0] + user.name.last[0];
 </script>
 
-<div class="flex h-screen w-full items-center justify-center">
+<div class="flex h-dvh w-full items-center justify-center">
   <div class="card m-4 w-full max-w-md space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Profile</h3>
     <div class="flex justify-center">

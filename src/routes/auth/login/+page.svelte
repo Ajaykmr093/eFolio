@@ -26,7 +26,7 @@
   });
 </script>
 
-<div class="flex h-screen w-full items-center justify-center">
+<div class="flex h-dvh w-full items-center justify-center">
   <div class="card m-4 w-full max-w-sm space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Log in to your account</h3>
     <form use:enhance class="space-y-4 md:space-y-6" method="post">
