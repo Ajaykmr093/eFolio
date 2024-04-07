@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import type { SellerBookEntry } from './schema';
+  import type { Book } from '$lib/schema/book';
 
-  $: entries = $page.data.entries as SellerBookEntry[];
+  $: entries = $page.data.entries as Book[];
   $: verifiedWarn = !$page.data.isVerfied as boolean;
 </script>
 
@@ -45,14 +45,14 @@
         <div class="h-[190px] overflow-hidden rounded-lg xl:h-[265px]">
           <img
             class="object-contain brightness-90"
-            src={entry.book.cover_url}
+            src={entry.cover_url}
             alt="cover"
-            title={entry.book.title}
+            title={entry.title}
             loading="lazy"
           />
         </div>
         <p class="line-clamp-2 text-[15px] xl:text-base">
-          {entry.book.title}
+          {entry.title}
         </p>
       </a>
     {/each}

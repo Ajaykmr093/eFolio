@@ -24,9 +24,9 @@
   });
 
   const fileCover = fileProxy(form, 'cover');
-  const fileSampleBook = fileProxy(form, 'sampleBook');
+  const fileSampleBook = fileProxy(form, 'sample_book');
   const fileBook = fileProxy(form, 'book');
-  const datePublish = dateProxy(form, 'publishDate', { format: 'date' });
+  const datePublish = dateProxy(form, 'publish_date', { format: 'date' });
 </script>
 
 <div class="flex w-full items-center justify-center">
@@ -66,17 +66,31 @@
         {/if}
       </label>
       <label class="label">
+        <p class="font-medium">Language</p>
+        <input
+          class="input"
+          class:variant-ghost-error={$errors.language}
+          type="text"
+          name="language"
+          bind:value={$form.language}
+          required
+        />
+        {#if $errors.description}
+          <div class="text-sm text-error-500">{$errors.description}</div>
+        {/if}
+      </label>
+      <label class="label">
         <p class="font-medium">Publish date</p>
         <input
           class="input"
-          class:variant-ghost-error={$errors.publishDate}
+          class:variant-ghost-error={$errors.publish_date}
           type="date"
-          name="publishDate"
+          name="publish_date"
           bind:value={$datePublish}
           required
         />
-        {#if $errors.publishDate}
-          <div class="text-sm text-error-500">{$errors.publishDate}</div>
+        {#if $errors.publish_date}
+          <div class="text-sm text-error-500">{$errors.publish_date}</div>
         {/if}
       </label>
       <label class="label">
@@ -118,9 +132,9 @@
       </label>
       <label class="label">
         <p class="font-medium">Sample Book</p>
-        <input type="file" name="sampleBook" bind:files={$fileSampleBook} />
-        {#if $errors.sampleBook}
-          <div class="text-sm text-error-500">{$errors.sampleBook}</div>
+        <input type="file" name="sample_book" bind:files={$fileSampleBook} />
+        {#if $errors.sample_book}
+          <div class="text-sm text-error-500">{$errors.sample_book}</div>
         {/if}
       </label>
       <label class="label">

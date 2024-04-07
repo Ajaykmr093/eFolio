@@ -28,10 +28,10 @@ export const actions = {
       const coverBuffer = await form.data.cover.arrayBuffer();
       await Bun.write(coverPath, coverBuffer);
 
-      sampleBookPath = `uploads/samples/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
+      sampleBookPath = `uploads/samples/${crypto.randomUUID()}.${form.data.sample_book.name.split('.').pop()}`;
       const sampleBookBuffer = await form.data.book.arrayBuffer();
       await Bun.write(sampleBookPath, sampleBookBuffer);
-      
+
       bookPath = `uploads/books/${crypto.randomUUID()}.${form.data.book.name.split('.').pop()}`;
       const bookBuffer = await form.data.book.arrayBuffer();
       await Bun.write(bookPath, bookBuffer);
@@ -39,43 +39,17 @@ export const actions = {
       const book: Book = {
         title: form.data.title,
         description: form.data.description,
-        publish_date: form.data.publishDate,
-        cover_url: coverPath
-      };
-
-      const sell = {
+        publish_date: form.data.publish_date,
+        cover_url: coverPath,
         price: form.data.price,
         discount: form.data.discount,
-        sample_book_url: sampleBookPath,
+        sample_url: sampleBookPath,
         book_url: bookPath,
+        language: form.data.language
       };
 
-      const st = `
-        {
-          let $book = create only book content {
-            title: $bookInfo.title,
-            description: $bookInfo.description,
-            publish_date: $bookInfo.publish_date,
-            cover_url: $bookInfo.cover_url
-          };
-
-          let $bookRecord = $book.id;
-          let $sellerRecord = $auth.seller_id;
-
-          let $sellRecord = relate only $sellerRecord->sell->$bookRecord CONTENT {
-              price: $sellInfo.price,
-              discount: $sellInfo.discount,
-              book_url: $sellInfo.book_url,
-              sample_book_url: $sellInfo.sample_book_url,
-              in: $sellerRecord,
-              out: $bookRecord
-          };
-
-          return None;
-        };
-      `;
-      const vars = { bookInfo: book, sellInfo: sell };
-      await db.query(st, vars);
+      const st = 'create only book content $book;';
+      await db.query(st, { book });
       return redirect(303, '/seller');
     } catch (err) {
       if (isRedirect(err)) throw err;
