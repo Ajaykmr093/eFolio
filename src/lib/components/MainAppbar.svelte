@@ -54,7 +54,7 @@
                 </a>
               </li>
               <li>
-                {#if user.seller_id}
+                {#if user.seller_profile}
                   <a href="/seller">
                     <i class="fa-solid fa-shop" />
                     <span>Seller Portal</span>
