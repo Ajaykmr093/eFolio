@@ -11,9 +11,7 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async ({ locals, request, cookies }) => {
-    if (locals.user) redirect(303, '/');
-
+  default: async ({ request, cookies }) => {
     const form = await superValidate(request, zod(loginSchema));
 
     if (!form.valid) {
@@ -33,15 +31,17 @@ export const actions = {
         maxAge: maxAge,
         priority: 'high'
       });
-      return redirect(303, '/');
     } catch (err) {
-      if ((err as Error).message.includes('No record was returned')) {
-        return message(form, 'Invalid credentials.', { status: 401 });
+      const invalidErrMsg = 'Invalid credentials.';
+      if ((err as Error).message.includes(invalidErrMsg)) {
+        return message(form, invalidErrMsg, { status: 401 });
       } else {
         console.error(err);
         console.log('Signin failed.');
         return message(form, 'Somthing went wrong.', { status: 500 });
       }
     }
+
+    return redirect(303, '/');
   }
 } satisfies Actions;
