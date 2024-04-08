@@ -12,7 +12,7 @@
     validators: zodClient(SellerBookPostSchema)
   });
 
-  const unsunbMsg = message.subscribe(() => {
+  const unsubMsg = message.subscribe(() => {
     if ($message) {
       const t: ToastSettings = { message: $message, background: 'variant-filled-error' };
       toastStore.trigger(t);
@@ -20,7 +20,7 @@
   });
 
   onDestroy(() => {
-    unsunbMsg();
+    unsubMsg();
   });
 
   const fileCover = fileProxy(form, 'cover');
