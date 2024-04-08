@@ -3,14 +3,14 @@
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { superForm } from 'sveltekit-superforms';
   import { zod } from 'sveltekit-superforms/adapters';
-  import { loginSchema } from './schema';
+  import { LoginSchema } from './schema';
   import { onDestroy } from 'svelte';
 
   export let data: PageData;
   const toastStore = getToastStore();
 
   const { form, enhance, errors, message } = superForm(data.form, {
-    validators: zod(loginSchema),
+    validators: zod(LoginSchema),
     taintedMessage: false
   });
 

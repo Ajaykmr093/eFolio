@@ -3,16 +3,16 @@ import type { PageServerLoad } from './$types';
 import { db } from '$lib/surreal';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
-import { loginSchema } from './schema';
+import { LoginSchema } from './schema';
 
 export const load = (async () => {
-  const form = await superValidate(zod(loginSchema));
+  const form = await superValidate(zod(LoginSchema));
   return { form };
 }) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request, cookies }) => {
-    const form = await superValidate(request, zod(loginSchema));
+    const form = await superValidate(request, zod(LoginSchema));
 
     if (!form.valid) {
       return fail(400, { form });

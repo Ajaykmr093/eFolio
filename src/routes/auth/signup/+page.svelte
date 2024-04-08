@@ -15,7 +15,7 @@
   let usernameAvailable: boolean | undefined;
   let checkingUsername = false;
 
-  const signupSchema = UserSchema.pick({
+  const SignupSchema = UserSchema.pick({
     username: true,
     email: true,
     password: true
@@ -23,7 +23,7 @@
     name: UserSchema.shape.name.omit({ full: true })
   });
 
-  const defaults: z.infer<typeof signupSchema> = {
+  const defaults: z.infer<typeof SignupSchema> = {
     username: '',
     email: '',
     password: '',
@@ -34,7 +34,7 @@
   };
 
   const { form, enhance, errors, validate } = superForm(defaults, {
-    validators: zodClient(signupSchema),
+    validators: zodClient(SignupSchema),
     dataType: 'json',
     taintedMessage: false
   });
@@ -62,7 +62,7 @@
     checkingUsername = true;
     debounce(800, async () => {
       const st = 'SELECT * FROM username_lookup WHERE username = type::string($username) limit 1;';
-      type Username = z.infer<typeof signupSchema.shape.username>;
+      type Username = z.infer<typeof SignupSchema.shape.username>;
       const query = await db.query<[Username[]]>(st, {
         username: $form.username.toLowerCase()
       });
