@@ -5,8 +5,6 @@ export const GET: RequestHandler = async ({ params }) => {
   const { file } = params;
   const filePath = path.resolve('uploads/covers', file);
 
-  console.log(filePath);
-
   try {
     const file = Bun.file(filePath);
     const data = await file.arrayBuffer();
