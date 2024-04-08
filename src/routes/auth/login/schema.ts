@@ -1,7 +1,7 @@
+import { UserSchema } from '$lib/schema/user';
 import { z } from 'zod';
 
-export const loginSchema = z.object({
+export const loginSchema = UserSchema.pick({ password: true }).extend({
   uid: z.string(),
-  password: z.string().min(4, 'Too short'),
   remember: z.boolean()
 });
