@@ -3,6 +3,7 @@
   import Item from './Item.svelte';
   import { page } from '$app/stores';
   import type { User } from '$lib/schema/user';
+  import { enhance } from '$app/forms';
 
   $: user = $page.data.user as User;
   $: initials = user.name.first[0] + user.name.last[0];
@@ -18,8 +19,11 @@
     <Item key="Username" value={user.username}></Item>
     <Item key="Email" value={user.email}></Item>
     <Item key="User Since" value={new Date(user.created_at).toLocaleDateString()}></Item>
-    <form action="logout">
-      <button type="submit" class="variant-filled btn mt-4 w-full">Logout</button>
+    <form action="/auth/logout" method="post" use:enhance>
+      <button class="variant-filled btn w-full" type="submit">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </button>
     </form>
   </div>
 </div>
