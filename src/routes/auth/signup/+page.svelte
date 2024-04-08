@@ -1,14 +1,13 @@
 <script lang="ts">
   import { superForm } from 'sveltekit-superforms/client';
-  import type { PageData } from './$types';
-  import { signupSchema } from './schema';
-  import { zod } from 'sveltekit-superforms/adapters';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import { Stepper, Step, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { debounce } from 'throttle-debounce';
   import { db } from '$lib/surreal';
   import { z } from 'zod';
+  import { goto } from '$app/navigation';
+  import { UserSchema } from '$lib/schema/user';
 
-  export let data: PageData;
   const toastStore = getToastStore();
 
   let validName = false;
@@ -16,21 +15,38 @@
   let usernameAvailable: boolean | undefined;
   let checkingUsername = false;
 
-  const { form, enhance, errors, message, validate } = superForm(data.form, {
-    validators: zod(signupSchema),
+  const signupSchema = UserSchema.pick({
+    username: true,
+    email: true,
+    password: true
+  }).extend({
+    name: UserSchema.shape.name.omit({ full: true })
+  });
+
+  const defaults: z.infer<typeof signupSchema> = {
+    username: '',
+    email: '',
+    password: '',
+    name: {
+      first: '',
+      last: ''
+    }
+  };
+
+  const { form, enhance, errors, validate } = superForm(defaults, {
+    validators: zodClient(signupSchema),
+    dataType: 'json',
     taintedMessage: false
   });
 
-  message.subscribe(() => {
-    if ($message) {
-      const t: ToastSettings = { message: $message, background: 'variant-filled-error' };
-      toastStore.trigger(t);
-    }
-  });
+  const showError = (message: string) => {
+    const t: ToastSettings = { message: message, background: 'variant-filled-error' };
+    toastStore.trigger(t);
+  };
 
   const validateName = async () => {
-    const a = await validate('first_name', { update: false });
-    const b = await validate('last_name', { update: false });
+    const a = await validate('name.first', { update: false });
+    const b = await validate('name.last', { update: false });
     const c = await validate('username', { update: false });
     validName = !a && !b && !c;
   };
@@ -41,13 +57,12 @@
     validCreds = !a && !b;
   };
 
-  type Username = z.infer<typeof signupSchema.shape.username>;
-
   const checkUsername = () => {
     if (checkingUsername) return;
     checkingUsername = true;
     debounce(800, async () => {
-      const st = 'SELECT * FROM username_lookup WHERE username = type::string($username)';
+      const st = 'SELECT * FROM username_lookup WHERE username = type::string($username) limit 1;';
+      type Username = z.infer<typeof signupSchema.shape.username>;
       const query = await db.query<[Username[]]>(st, {
         username: $form.username.toLowerCase()
       });
@@ -57,13 +72,32 @@
       checkingUsername = false;
     })();
   };
+
+  const signup = async () => {
+    const { username, password, name, email } = $form;
+
+    try {
+      const token = await db.signup({ scope: 'user', name, email, username, password });
+      if (!token) return showError('Authentication failed.');
+      return goto('/auth/login');
+    } catch (err) {
+      const existsErrMsg = 'Email already exists.';
+      if ((err as Error).message.includes(existsErrMsg)) {
+        $errors.email = [existsErrMsg];
+      } else {
+        console.error(err);
+        console.log('Signup failed.');
+        return showError('Somthing went wrong.');
+      }
+    }
+  };
 </script>
 
 <div class="flex h-dvh w-full items-center justify-center">
   <div class="card m-4 w-full max-w-sm space-y-4 p-6 sm:p-8 md:space-y-6">
     <h3 class="h3 font-bold">Create a new account</h3>
     <form use:enhance method="post">
-      <Stepper regionHeader="hidden" buttonCompleteType="submit">
+      <Stepper regionHeader="hidden" on:complete={signup}>
         <!-- Name -->
         <Step regionHeader="hidden" locked={!validName || !usernameAvailable || checkingUsername}>
           <div class="space-y-4 md:space-y-6" on:input={validateName}>
@@ -73,16 +107,13 @@
                   <p class="font-medium">First Name</p>
                   <input
                     class="input"
-                    class:variant-ghost-error={$errors.first_name}
-                    title="Enter your first name"
+                    class:variant-ghost-error={$errors.name?.first}
                     type="text"
-                    name="first_name"
-                    placeholder="Ramu"
-                    bind:value={$form.first_name}
+                    bind:value={$form.name.first}
                     required
                   />
-                  {#if $errors.first_name}
-                    <div class="text-sm text-error-500">{$errors.first_name}</div>
+                  {#if $errors.name?.first}
+                    <div class="text-sm text-error-500">{$errors.name.first}</div>
                   {/if}
                 </label>
               </div>
@@ -91,16 +122,13 @@
                   <p class="font-medium">Last Name</p>
                   <input
                     class="input"
-                    class:variant-ghost-error={$errors.last_name}
-                    title="Enter your last name"
+                    class:variant-ghost-error={$errors.name?.last}
                     type="text"
-                    name="last_name"
-                    placeholder="Kaka"
-                    bind:value={$form.last_name}
+                    bind:value={$form.name.last}
                     required
                   />
-                  {#if $errors.last_name}
-                    <div class="text-sm text-error-500">{$errors.last_name}</div>
+                  {#if $errors.name?.last}
+                    <div class="text-sm text-error-500">{$errors.name.last}</div>
                   {/if}
                 </label>
               </div>
@@ -110,10 +138,6 @@
               <input
                 class="input"
                 class:variant-ghost-error={$errors.username}
-                title="Enter a username"
-                type="text"
-                name="username"
-                placeholder="ramukaka123"
                 bind:value={$form.username}
                 on:input={checkUsername}
                 required
@@ -135,10 +159,7 @@
               <input
                 class="input"
                 class:variant-ghost-error={$errors.email}
-                title="Enter your email"
                 type="email"
-                name="email"
-                placeholder="name@company.com"
                 bind:value={$form.email}
                 required
               />
@@ -151,10 +172,7 @@
               <input
                 class="input"
                 class:variant-ghost-error={$errors.password}
-                title="Enter a password"
                 type="password"
-                name="password"
-                placeholder="••••••••"
                 bind:value={$form.password}
                 required
               />
@@ -166,8 +184,8 @@
 
           <!-- https://github.com/skeletonlabs/skeleton/discussions/1490#discussioncomment-5886991 -->
           <!-- Stepper does not support multi-step forms; hence, this workaround -->
-          <input name="first_name" bind:value={$form.first_name} hidden />
-          <input name="last_name" bind:value={$form.last_name} hidden />
+          <input name="first_name" bind:value={$form.name.first} hidden />
+          <input name="last_name" bind:value={$form.name.last} hidden />
           <input name="username" bind:value={$form.username} hidden />
         </Step>
       </Stepper>
