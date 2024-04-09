@@ -41,6 +41,18 @@ const auth = (async ({ event, resolve }) => {
     await logout(locals, cookies);
   }
 
+  const sellerRoute = event.url.pathname.includes('/seller');
+  const sellerApplicationRoute = event.url.pathname.includes('/seller/apply');
+  const isSeller = event.locals.user?.seller_id != undefined;
+
+  if (sellerRoute && !sellerApplicationRoute && !isSeller) {
+    return redirect(303, '/seller/apply');
+  }
+
+  if (sellerApplicationRoute && isSeller) {
+    return redirect(303, '/seller');
+  }
+
   return await resolve(event);
 }) satisfies Handle;
 
