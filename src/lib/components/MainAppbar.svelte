@@ -60,7 +60,7 @@
                     <span>Seller Portal</span>
                   </a>
                 {:else}
-                  <a href="/seller/apply">
+                  <a href="/seller/application">
                     <i class="fa-solid fa-shop" />
                     <span>Become a seller</span>
                   </a>

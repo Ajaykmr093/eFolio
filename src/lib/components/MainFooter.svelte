@@ -22,7 +22,7 @@
       </div>
       <div class="flex flex-col gap-1">
         <a href="/" class="anchor">Admin portal</a>
-        <a href="/seller/apply" class="anchor">Become a seller</a>
+        <a href="/seller/application" class="anchor">Become a seller</a>
         <a href="/seller" class="anchor">Seller portal</a>
       </div>
     </div>
