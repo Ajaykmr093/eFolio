@@ -5,9 +5,17 @@ import { SellerApplicationSchema } from './schema';
 import { redirect, type Actions } from '@sveltejs/kit';
 import { db } from '$lib/surreal';
 
-export const load = (async () => {
+export const load = (async ({ locals }) => {
   const form = await superValidate(zod(SellerApplicationSchema));
-  return { form };
+  const uid = locals.user!.id;
+
+  const st = `
+    $res = SELECT application_status, remark FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;
+    $res['application_status'];
+    $res['remark'];
+  `;
+  const result = await db.query<[null, string, string]>(st, { uid });
+  return { form, applicationStatus: result[1], remark: result[2] };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -18,20 +26,32 @@ export const actions = {
       return fail(400, { form });
     }
 
+    let documentPath: string;
+
     try {
-      const { email, name } = form.data;
-      const user = locals.user;
-      const vars = { name, email, user };
-      const token = await db.signup({ scope: 'seller', vars });
+      documentPath = `uploads/documents/${crypto.randomUUID()}.${form.data.document.name.split('.').pop()}`;
+      const documentBuffer = await form.data.document.arrayBuffer();
+      await Bun.write(documentPath, documentBuffer);
+
+      const { email, name, password } = form.data;
+      const vars = { name, email, password, user: locals.user?.id, doc: documentPath };
+      const token = await db.signup({ scope: 'seller', ...vars });
       if (!token) return message(form, 'Authentication failed.', { status: 401 });
-      return redirect(303, '/seller');
     } catch (err) {
-      if ((err as Error).message.includes('Seller profile already exists')) {
-        return message(form, 'Seller profile already exists.', { status: 401 });
+      const credsErrMsg = 'Invalid credentials.';
+      const existsErrMsg = 'Seller profile already exists.';
+      const errMsg = (err as Error).message;
+      if (errMsg.includes(existsErrMsg)) {
+        return message(form, existsErrMsg, { status: 401 });
+      } else if (errMsg.includes(credsErrMsg)) {
+        return message(form, credsErrMsg, { status: 401 });
+      } else {
+        console.error(err);
+        console.log('Signup failed.');
+        return message(form, 'Somthing went wrong.', { status: 500 });
       }
-      console.error(err);
-      console.log('Signup failed.');
-      return message(form, 'Somthing went wrong.', { status: 500 });
     }
+
+    return redirect(303, '/seller');
   }
 } satisfies Actions;
