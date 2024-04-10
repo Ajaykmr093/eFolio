@@ -19,7 +19,7 @@ export const load = (async ({ locals }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async ({ locals, request }) => {
+  apply: async ({ locals, request }) => {
     const form = await superValidate(request, zod(SellerApplicationSchema));
 
     if (!form.valid) {
@@ -52,6 +52,12 @@ export const actions = {
       }
     }
 
-    return redirect(303, '/seller');
+    return redirect(303, '#');
+  },
+
+  reapply: async ({ locals }) => {
+    const st = 'delete applies_to_become where in = $uid';
+    db.query(st, { uid: locals.user!.id });
+    return redirect(303, '#');
   }
 } satisfies Actions;

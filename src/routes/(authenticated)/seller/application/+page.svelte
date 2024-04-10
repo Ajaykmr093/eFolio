@@ -41,6 +41,9 @@
     {:else if applicationStatus == 'rejected'}
       <p>Youre application is rejected.</p>
       <p>REMARK: {remark}</p>
+      <form method="post" action="?/reapply">
+        <button type="submit" class="variant-filled btn mt-4 w-full">Reapply</button>
+      </form>
     {:else if applicationStatus == 'pending'}
       <p>
         You already have a pending application request. It can take upto 48 hours to verify your
@@ -51,6 +54,7 @@
         use:enhance
         class="flex flex-col gap-4 md:gap-6"
         method="post"
+        action="?/apply"
         enctype="multipart/form-data"
       >
         <label class="label">
