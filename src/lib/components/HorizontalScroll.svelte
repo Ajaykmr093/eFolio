@@ -43,37 +43,29 @@
   on:mouseleave={() => (hover = false)}
   role="region"
 >
-  <button
-    on:click={left}
-    disabled={!canScrollLeft}
-    class="absolute left-0 top-0 z-[1] flex h-full w-[30px] items-center justify-center xl:w-[70px]"
-  >
-    <div
-      class="variant-filled-surface btn-icon absolute opacity-0 transition-opacity duration-300 ease-out"
-      class:opacity-80={canScrollLeft && hover}
+  <div class="absolute left-5 top-0 z-[1] flex h-full items-center justify-center">
+    <button
+      on:click={left}
+      class="variant-glass btn-icon opacity-0 brightness-200 drop-shadow-lg transition-opacity duration-300 ease-out"
+      class:opacity-100={canScrollLeft && hover}
     >
       <i class="fa-solid fa-caret-left"></i>
-    </div>
-    <div class="h-full w-full bg-gradient-to-r from-surface-900 to-transparent"></div>
-  </button>
+    </button>
+  </div>
   <div
     bind:this={scrollContainer}
     on:scroll={parseScroll}
-    class={`hide-scrollbar flex ${gap} overflow-x-scroll scroll-smooth px-5 py-5 xl:px-14`}
+    class={`hide-scrollbar flex ${gap} overflow-x-scroll scroll-smooth py-5`}
   >
     <slot />
   </div>
-  <button
-    on:click={right}
-    disabled={!canScrollRight}
-    class="absolute right-0 top-0 z-[1] flex h-full w-[30px] items-center justify-center xl:w-[70px]"
-  >
-    <div
-      class="variant-filled-surface btn-icon absolute opacity-0 transition-opacity duration-300 ease-out"
-      class:opacity-80={canScrollRight && hover}
+  <div class="absolute right-5 top-0 z-[1] flex h-full items-center justify-center">
+    <button
+      on:click={right}
+      class="variant-glass btn-icon opacity-0 brightness-200 drop-shadow-lg transition-opacity duration-300 ease-out"
+      class:opacity-100={canScrollRight && hover}
     >
       <i class="fa-solid fa-caret-right"></i>
-    </div>
-    <div class="h-full w-full bg-gradient-to-r from-transparent to-surface-900"></div>
-  </button>
+    </button>
+  </div>
 </div>

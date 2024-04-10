@@ -22,23 +22,23 @@
     </a>
   </svelte:fragment>
   <button
-    class="btn variant-soft hover:variant-soft-primary rounded-full w-full justify-start max-w-sm"
+    class="variant-soft btn w-full max-w-sm justify-start rounded-full hover:variant-soft-primary"
     title="Search for Books, Authors and More"
   >
     <i class="fa-solid fa-search" />
-    <span class="opacity-70 overflow-hidden text-ellipsis">Search for Books, Authors and More</span>
+    <span class="overflow-hidden text-ellipsis opacity-70">Search for Books, Authors and More</span>
   </button>
   <svelte:fragment slot="trail">
     <a class="btn-icon lg:hidden" href="/" title="Search">
       <i class="fa-solid fa-search" />
     </a>
     {#if user}
-      <div class="relative flex items-center ml-2">
+      <div class="relative ml-2 flex items-center">
         <button use:popup={{ event: 'click', target: 'features' }}>
           <Avatar {initials} width="w-10" rounded="rounded-full" />
         </button>
         <!-- popup -->
-        <div class="card p-4 w-60 shadow-xl" data-popup="features">
+        <div class="card w-60 p-4 shadow-xl" data-popup="features">
           <nav class="list-nav">
             <ul>
               <li>
@@ -66,21 +66,20 @@
                   </a>
                 {/if}
               </li>
-              <li class="text-error-500">
-                <form action="/auth/logout" method="post" use:enhance>
-                  <button class="btn w-full justify-start" type="submit">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>Logout</span>
-                  </button>
-                </form>
-              </li>
             </ul>
           </nav>
+          <hr class="my-2" />
+          <form action="/auth/logout" method="post" use:enhance>
+            <button class="variant-filled btn w-full justify-start" type="submit">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>Logout</span>
+            </button>
+          </form>
         </div>
       </div>
     {:else}
       <div class="flex items-center">
-        <a class="btn-icon w-10 variant-filled-surface" href="/auth/signup">
+        <a class="variant-filled-surface btn-icon w-10" href="/auth/signup">
           <i class="fa-solid fa-user" />
         </a>
       </div>

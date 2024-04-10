@@ -9,7 +9,7 @@
   $: user = $page.data.user as User;
 </script>
 
-<header class="flex h-70v w-full flex-col items-center justify-center bg-surface-700 p-4">
+<header class="flex h-70v w-full flex-col items-center justify-center bg-surface-200-700-token p-4">
   <img src={logo} alt="Logo" class="mb-8 h-32 w-32 drop-shadow-lg filter" />
   <h3 class="h3 text-center font-semibold">Carry Your Stories Everywhere with eBook</h3>
   <div class="mt-8 flex flex-row justify-center gap-4">
