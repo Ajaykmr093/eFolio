@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { SellerSchema } from './seller';
 
 export const UserSchema = z.object({
   id: z.string(),
@@ -12,7 +11,7 @@ export const UserSchema = z.object({
   username: z.string().min(4),
   password: z.string().min(4),
   created_at: z.date(),
-  seller_profile: SellerSchema.optional()
+  seller_profile: z.string().optional()
 });
 
 export type User = z.infer<typeof UserSchema>;
