@@ -47,12 +47,9 @@ const auth = (async ({ event, resolve }) => {
 
   let isVerified = false;
   try {
-    const st = `
-      $res = SELECT application_status FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;
-      $res['application_status'] == 'approved';
-    `;
-    const result = await db.query<[null, boolean]>(st, { uid: event.locals.user!.id });
-    isVerified = result[1];
+    const st = 'SELECT VALUE application_status FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;';
+    const result = await db.query<[string]>(st, { uid: event.locals.user!.id });
+    isVerified = result[0] == 'approved';
   } catch (error) {
     console.error(error);
     console.log('Failed to verify seller status.');
