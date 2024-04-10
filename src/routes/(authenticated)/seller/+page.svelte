@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import MediaEntry from '$lib/components/MediaEntry.svelte';
   import type { Book } from '$lib/schema/book';
 
   $: entries = $page.data.entries as Book[];
@@ -19,23 +20,12 @@
       <i class="fa-solid fa-add" />
     </a>
     {#each entries as entry (entry.id)}
-      <a
-        href="/"
-        class="flex w-[135px] shrink-0 flex-col gap-3 duration-300 ease-out hover:-translate-y-1 hover:brightness-125 xl:w-[185px]"
-      >
-        <div class="h-[190px] overflow-hidden rounded-lg xl:h-[265px]">
-          <img
-            class="object-contain brightness-90"
-            src={entry.cover_url}
-            alt="cover"
-            title={entry.title}
-            loading="lazy"
-          />
-        </div>
-        <p class="line-clamp-2 text-[15px] xl:text-base">
-          {entry.title}
-        </p>
-      </a>
+      <MediaEntry
+        title={entry.title}
+        cover={entry.cover_url}
+        price={entry.price}
+        discount={entry.discount}
+      />
     {/each}
   </div>
 </div>
