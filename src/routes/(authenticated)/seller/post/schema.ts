@@ -5,7 +5,7 @@ export const SellerBookPostSchema = BookSchema.omit({
   sample_url: true,
   cover_url: true,
   book_url: true,
-  seller_id: true,
+  seller: true,
   id: true
 }).extend({
   cover: z.instanceof(File),

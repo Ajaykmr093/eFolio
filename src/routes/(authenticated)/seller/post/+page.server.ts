@@ -3,7 +3,6 @@ import type { PageServerLoad } from './$types';
 import { SellerBookPostSchema } from './schema';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { db } from '$lib/surreal';
-import type { Book } from '$lib/schema/book';
 import { unlink } from 'fs/promises';
 import { isRedirect, redirect } from '@sveltejs/kit';
 
@@ -36,7 +35,7 @@ export const actions = {
       const bookBuffer = await form.data.book.arrayBuffer();
       await Bun.write(bookPath, bookBuffer);
 
-      const book: Book = {
+      const data = {
         title: form.data.title,
         description: form.data.description,
         publish_date: form.data.publish_date,
@@ -48,8 +47,27 @@ export const actions = {
         language: form.data.language
       };
 
-      const st = 'create only book content $book;';
-      await db.query(st, { book });
+      const st = `
+        {
+          let $b = create only book content {
+            title: $title,
+            description: $description,
+            cover_url: $cover_url,
+            publish_date: $publish_date,
+            language: $language,
+            sample_url: $sample_url
+          };
+          let $seller = $b.seller;
+          relate $seller -> sells -> $b content {
+            in: $seller.id,
+            out: $b.id,
+            price: $price,
+            discount: $discount,
+            book_url: $book_url
+          };
+        }      
+      `;
+      await db.query(st, { ...data });
       return redirect(303, '/seller');
     } catch (err) {
       if (isRedirect(err)) throw err;
@@ -57,6 +75,7 @@ export const actions = {
       console.log('Failed to post book.');
       if (coverPath) await unlink(coverPath);
       if (bookPath) await unlink(bookPath);
+      if (sampleBookPath) await unlink(sampleBookPath);
       return message(form, 'Somthing went wrong.', { status: 500 });
     }
   }
