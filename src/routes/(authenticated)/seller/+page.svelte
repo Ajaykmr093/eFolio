@@ -3,28 +3,9 @@
   import type { Book } from '$lib/schema/book';
 
   $: entries = $page.data.entries as Book[];
-  $: verifiedWarn = !$page.data.isVerfied as boolean;
 </script>
 
 <div class="mt-12"></div>
-
-{#if verifiedWarn}
-  <aside class="alert variant-ghost mx-5">
-    <div><i class="fa-solid fa-triangle-exclamation text-3xl"></i></div>
-    <div class="alert-message">
-      <h3 class="h3">Warning</h3>
-      <p>
-        Your seller account is not verified. Your entries will be posted after your account gets
-        verified.
-      </p>
-    </div>
-    <div class="alert-actions">
-      <button class="variant-filled-surface btn" on:click={() => (verifiedWarn = false)}>
-        OK
-      </button>
-    </div>
-  </aside>
-{/if}
 
 <div>
   <div class="px-5 py-5 xl:px-14">
