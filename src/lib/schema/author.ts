@@ -2,9 +2,7 @@ import { z } from 'zod';
 
 export const AuthorSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  cover: z.object({
-    small: z.string(),
-    medium: z.string()
-  })
+  name: z.string().max(40),
+  about: z.string().max(4096),
+  is_verified: z.boolean()
 });
