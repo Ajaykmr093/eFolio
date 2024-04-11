@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import MediaEntry from '$lib/components/MediaEntry.svelte';
   import type { Book } from '$lib/schema/book';
@@ -25,6 +26,7 @@
         cover={entry.cover_url}
         price={entry.price}
         discount={entry.discount}
+        on:click={() => goto('/book/' + entry.id)}
       />
     {/each}
   </div>

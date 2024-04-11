@@ -1,9 +1,9 @@
+import type { Book } from '$lib/schema/book';
 import { db } from '$lib/surreal';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import type { Book } from '$lib/schema/book';
 
-export const load = (async () => {
+export const load = (async ({ params }) => {
   try {
     const st = `
       SELECT
@@ -11,13 +11,15 @@ export const load = (async () => {
         discount,
         out.title AS title,
         out.cover_url AS cover_url,
+        out.publish_date as publish_date,
+        out.description as description,
+        out.language as language,
         meta::id(out.id) AS id
-      FROM
-        (SELECT value ->sells FROM only $auth.seller_profile);
+      FROM only (SELECT value <-sells[0] FROM only $bookId);
     `;
-    const result = await db.query<[Book[]]>(st);
-    const entries = result[0];
-    return { entries };
+    const result = await db.query<[Book]>(st, { bookId: `book:${params.id}` });
+    const book = result[0];
+    return { book };
   } catch (err) {
     console.error(err);
     console.log('Failed to query seller book entries.');
