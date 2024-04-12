@@ -23,7 +23,7 @@
     {#each entries as entry (entry.id)}
       <MediaEntry
         title={entry.title}
-        cover={entry.cover_url}
+        cover={entry.coverUrl}
         price={entry.price}
         discount={entry.discount}
         on:click={() => goto('/book/' + entry.id)}

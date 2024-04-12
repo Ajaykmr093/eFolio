@@ -11,12 +11,12 @@
   <div class="flex">
     <div class="flex-grow">
       <div class="flex">
-        <img class="mr-4 rounded-lg md:hidden" src={book.cover_url} width="96" alt="" />
+        <img class="mr-4 rounded-lg md:hidden" src={book.coverUrl} width="96" alt="" />
         <div>
           <h1 class="h1 font-bold">{book.title}</h1>
           <div class="mt-1 md:mt-4">
             <a href="#/" class="anchor font-bold no-underline">[author]</a>
-            <div class="text-xs"><span>{book.publish_date}</span> · [publication]</div>
+            <div class="text-xs"><span>{book.publishDate}</span> · [publication]</div>
           </div>
         </div>
       </div>
@@ -50,10 +50,10 @@
       </div>
     </div>
     <div class="relative hidden md:block">
-      <img class="rounded-lg" src={book.cover_url} width="233" height="345" alt="" />
+      <img class="rounded-lg" src={book.coverUrl} width="233" height="345" alt="" />
       <img
         class="absolute -bottom-3 left-5 -z-10 rounded-lg opacity-50 blur-md"
-        src={book.cover_url}
+        src={book.coverUrl}
         width="233"
         height="345"
         alt=""
@@ -73,19 +73,19 @@
       <p><i class="fa-solid fa-chevron-right"></i></p>
     </div>
     <HorizontalScroll>
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
     </HorizontalScroll>
   </div>
   <div class="mt-16">
@@ -94,19 +94,19 @@
       <p><i class="fa-solid fa-chevron-right"></i></p>
     </div>
     <HorizontalScroll>
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
-      <MediaEntry {...book} cover={book.cover_url} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaEntry {...book} cover={book.coverUrl} />
     </HorizontalScroll>
   </div>
 </div>
