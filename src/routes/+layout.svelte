@@ -5,7 +5,7 @@
   import '@fortawesome/fontawesome-free/css/brands.css';
   import '@fortawesome/fontawesome-free/css/solid.css';
 
-  import { AppShell, initializeStores, Toast } from '@skeletonlabs/skeleton';
+  import { AppShell, initializeStores, Modal, Toast } from '@skeletonlabs/skeleton';
   initializeStores();
 
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -21,6 +21,7 @@
 </script>
 
 <Toast />
+<Modal />
 
 <AppShell>
   <svelte:fragment slot="header">
