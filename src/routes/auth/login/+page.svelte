@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { superForm } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import { LoginSchema } from './schema';
   import { onDestroy } from 'svelte';
 
@@ -10,7 +10,7 @@
   const toastStore = getToastStore();
 
   const { form, enhance, errors, message } = superForm(data.form, {
-    validators: zod(LoginSchema),
+    validators: zodClient(LoginSchema),
     taintedMessage: false
   });
 

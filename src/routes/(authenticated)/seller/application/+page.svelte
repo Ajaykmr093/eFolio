@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import { fileProxy, superForm } from 'sveltekit-superforms';
-  import { zod } from 'sveltekit-superforms/adapters';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import { SellerApplicationSchema } from './schema';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { onDestroy } from 'svelte';
@@ -11,7 +11,7 @@
   const toastStore = getToastStore();
 
   const { form, enhance, message, errors } = superForm(data.form, {
-    validators: zod(SellerApplicationSchema),
+    validators: zodClient(SellerApplicationSchema),
     taintedMessage: false
   });
 
