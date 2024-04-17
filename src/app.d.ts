@@ -8,4 +8,11 @@ declare namespace App {
   // interface PageData {}
   // interface Error {}
   // interface Platform {}
+  namespace Superforms {
+    type Message = {
+      status: 'error' | 'success' | 'warning';
+      text: string | null | undefined;
+      data: undefined | null | unknown;
+    };
+  }
 }
