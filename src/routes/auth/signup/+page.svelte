@@ -3,7 +3,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { Stepper, Step, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { debounce } from 'throttle-debounce';
-  import { db } from '$lib/surreal';
+  import { db } from '$lib/helpers/surreal';
   import { z } from 'zod';
   import { goto } from '$app/navigation';
   import { SignupSchema } from '$lib/schema/user';
