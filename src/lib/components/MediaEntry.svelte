@@ -10,7 +10,7 @@
   class="flex w-[135px] shrink-0 flex-col gap-3 duration-300 ease-out hover:-translate-y-1 hover:brightness-125 xl:w-[185px]"
 >
   <div class="h-[190px] overflow-hidden rounded-lg xl:h-[265px]">
-    <img class="object-contain brightness-90" src={cover} alt="cover" {title} loading="lazy" />
+    <img class="object-contain brightness-90" loading="lazy" src={cover} alt="cover" {title} />
   </div>
   <div>
     <p class="line-clamp-2 text-start text-[15px] xl:text-base">{title}</p>
