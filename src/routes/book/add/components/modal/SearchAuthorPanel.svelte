@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import { superForm } from 'sveltekit-superforms/client';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { SearchAuthorSchema } from '../../schema';
+  import { SearchAuthorSchema } from '$lib/schema/author';
 
   // Context
   const searchAuthorForm: Record<string, unknown> = getContext('searchAuthorForm');

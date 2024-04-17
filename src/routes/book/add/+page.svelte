@@ -1,11 +1,11 @@
 <script lang="ts">
   import { superForm } from 'sveltekit-superforms/client';
   import SuperDebug from 'sveltekit-superforms';
-  import { AddBookSchema } from './schema.js';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
   import AddBookStepper from './components/steps/AddBookStepper.svelte';
   import { setContext } from 'svelte';
+  import { AddBookSchema } from '$lib/schema/book';
 
   // Exoprts
   export let data;

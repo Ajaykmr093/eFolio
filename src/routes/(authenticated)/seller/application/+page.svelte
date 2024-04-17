@@ -2,10 +2,10 @@
   import type { PageData } from './$types';
   import { fileProxy, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { SellerApplicationSchema } from './schema';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { onDestroy } from 'svelte';
   import { page } from '$app/stores';
+  import { SellerApplicationSchema } from '$lib/schema/seller';
 
   export let data: PageData;
   const toastStore = getToastStore();

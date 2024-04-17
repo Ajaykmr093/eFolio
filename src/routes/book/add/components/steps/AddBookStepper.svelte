@@ -2,14 +2,14 @@
   import { getContext } from 'svelte';
   import type { SuperForm } from 'sveltekit-superforms';
   import type { z } from 'zod';
-  
+
   import { Step, Stepper } from '$lib/components/Stepper';
-  import type { AddBookSchema } from '../../schema';
   import StepAuthor from './StepAuthor.svelte';
   import StepBook from './StepBook.svelte';
   import StepPricing from './StepPricing.svelte';
   import StepPublication from './StepPublication.svelte';
   import StepResources from './StepResources.svelte';
+  import type { AddBookSchema } from '$lib/schema/book';
 
   // Get Context
   type AddBook = z.infer<typeof AddBookSchema>;

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { AddBookSchema } from '../../schema';
   import type { SuperForm } from 'sveltekit-superforms/client';
   import { z } from 'zod';
   import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import AuthorSelectionModal from '../modal/AuthorSelectionModal.svelte';
+  import type { AddBookSchema } from '$lib/schema/book';
 
   // Get Context
   type AddBook = z.infer<typeof AddBookSchema>;

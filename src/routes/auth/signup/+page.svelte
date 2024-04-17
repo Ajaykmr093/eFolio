@@ -6,7 +6,7 @@
   import { db } from '$lib/surreal';
   import { z } from 'zod';
   import { goto } from '$app/navigation';
-  import { UserSchema } from '$lib/schema/user';
+  import { SignupSchema } from '$lib/schema/user';
 
   const toastStore = getToastStore();
 
@@ -14,14 +14,6 @@
   let validCreds = false;
   let usernameAvailable: boolean | undefined;
   let checkingUsername = false;
-
-  const SignupSchema = UserSchema.pick({
-    username: true,
-    email: true,
-    password: true
-  }).extend({
-    name: UserSchema.shape.name.omit({ full: true })
-  });
 
   const defaults: z.infer<typeof SignupSchema> = {
     username: '',

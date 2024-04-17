@@ -1,9 +1,9 @@
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
-import { SellerApplicationSchema } from './schema';
 import { redirect, type Actions } from '@sveltejs/kit';
 import { db } from '$lib/surreal';
+import { SellerApplicationSchema } from '$lib/schema/seller';
 
 export const load = (async ({ locals }) => {
   const form = await superValidate(zod(SellerApplicationSchema));

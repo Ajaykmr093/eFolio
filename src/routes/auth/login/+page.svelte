@@ -3,8 +3,8 @@
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { LoginSchema } from './schema';
   import { onDestroy } from 'svelte';
+  import { LoginSchema } from '$lib/schema/user';
 
   export let data: PageData;
   const toastStore = getToastStore();

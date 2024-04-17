@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import { db } from '$lib/surreal';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
-import { LoginSchema } from './schema';
+import { LoginSchema } from '$lib/schema/user';
 
 export const load = (async () => {
   const form = await superValidate(zod(LoginSchema));

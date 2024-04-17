@@ -1,10 +1,12 @@
 import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { AddAuthorSchema, AddBookSchema, SearchAuthorSchema } from './schema';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { db } from '$lib/surreal';
 import { unlink } from 'fs/promises';
 import type { PathLike } from 'fs';
+
+import { SearchAuthorSchema, AddAuthorSchema } from '$lib/schema/author';
+import { AddBookSchema } from '$lib/schema/book';
 
 export const load = (async () => {
   const addBookForm = await superValidate(zod(AddBookSchema));
@@ -86,19 +88,5 @@ export const actions = {
       if (sampleBookPath) await unlink(sampleBookPath);
       throw new Error('Failed to post book.');
     }
-  },
-
-  searchAuthor: async ({ request }) => {
-    const searchAuthorForm = await superValidate(request, zod(SearchAuthorSchema));
-
-    if (!searchAuthorForm.valid) {
-      return fail(400, { searchAuthorForm });
-    }
-
-    return message(searchAuthorForm, {
-      status: 'success',
-      text: null,
-      data: ['apple']
-    });
   }
 };

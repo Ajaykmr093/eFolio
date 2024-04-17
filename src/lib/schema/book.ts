@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { SellerSchema } from './seller';
 import { AuthorSchema } from './author';
 
+export type Book = z.infer<typeof BookSchema>;
+
 export const BookSchema = z.object({
   id: z.string(),
   title: z.string().min(3).max(250),
@@ -32,4 +34,27 @@ export const BookSchema = z.object({
   author: AuthorSchema
 });
 
-export type Book = z.infer<typeof BookSchema>;
+export const AddBookSchema = z.object({
+  book: BookSchema.pick({
+    title: true,
+    description: true,
+    totalPages: true,
+    language: true
+  }),
+  publication: BookSchema.pick({
+    isbn: true
+  }).extend({
+    name: BookSchema.shape.publication,
+    date: BookSchema.shape.publishDate
+  }),
+  pricing: BookSchema.pick({
+    price: true,
+    discount: true
+  }),
+  resources: z.object({
+    cover: z.instanceof(File),
+    book: z.instanceof(File),
+    sampleBook: z.instanceof(File)
+  }),
+  author: z.string().min(3).max(20)
+});

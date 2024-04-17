@@ -1,7 +1,7 @@
 <script lang="ts">
   import InputField from '$lib/components/InputField.svelte';
+  import type { AddBookSchema } from '$lib/schema/book';
   import { getContext } from 'svelte';
-  import type { AddBookSchema } from '../../schema';
   import { dateProxy, type SuperForm } from 'sveltekit-superforms/client';
   import { z } from 'zod';
 

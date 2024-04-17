@@ -6,3 +6,12 @@ export const AuthorSchema = z.object({
   about: z.string().max(4096),
   is_verified: z.boolean()
 });
+
+export const AddAuthorSchema = AuthorSchema.pick({
+  name: true,
+  about: true
+});
+
+export const SearchAuthorSchema = z.object({
+  q: z.string()
+});
