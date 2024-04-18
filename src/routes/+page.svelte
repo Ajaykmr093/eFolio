@@ -3,17 +3,15 @@
   import books from '$lib/assets/books.png';
   import devices from '$lib/assets/devices.png';
   import reader from '$lib/assets/reader.png';
-  import { page } from '$app/stores';
-  import type { User } from '$lib/schema/user';
 
-  $: user = $page.data.user as User;
+  export let data;
 </script>
 
-<header class="flex h-70v w-full flex-col items-center justify-center bg-surface-200-700-token p-4">
+<header class="bg-surface-200-700-token flex h-70v w-full flex-col items-center justify-center p-4">
   <img src={logo} alt="Logo" class="mb-8 h-32 w-32 drop-shadow-lg filter" />
   <h3 class="h3 text-center font-semibold">Carry Your Stories Everywhere with eBook</h3>
   <div class="mt-8 flex flex-row justify-center gap-4">
-    {#if !user}
+    {#if !data.user}
       <a href="/auth/signup" class="variant-filled btn">
         <i class="fa-solid fa-user-plus" />
         <span>Get Started</span>

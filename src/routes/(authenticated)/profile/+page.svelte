@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Avatar } from '@skeletonlabs/skeleton';
   import Item from './Item.svelte';
-  import { page } from '$app/stores';
-  import type { User } from '$lib/schema/user';
   import { enhance } from '$app/forms';
 
-  $: user = $page.data.user as User;
-  $: initials = user.name.first[0] + user.name.last[0];
+  export let data;
+
+  const user = data.user!;
+  const initials = user.name.first[0] + user.name.last[0];
 </script>
 
 <div class="flex h-dvh w-full items-center justify-center">

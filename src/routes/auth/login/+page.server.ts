@@ -1,9 +1,9 @@
 import { redirect, type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { db } from '$lib/surreal';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 import { LoginSchema } from '$lib/schema/user';
+import { db } from '$lib/db/surreal';
 
 export const load = (async () => {
   const form = await superValidate(zod(LoginSchema));
