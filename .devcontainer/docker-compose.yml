@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -12,7 +10,7 @@ services:
 
   database:
     container_name: database
-    image: surrealdb/surrealdb:v1.2.2-dev
+    image: surrealdb/surrealdb:v1.4.2-dev
     restart: unless-stopped
     env_file:
       - .env

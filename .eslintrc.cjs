@@ -1,12 +1,7 @@
 /** @type { import("eslint").Linter.Config } */
 module.exports = {
   root: true,
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:svelte/recommended',
-    'prettier'
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:svelte/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   parserOptions: {
@@ -27,5 +22,19 @@ module.exports = {
         parser: '@typescript-eslint/parser'
       }
     }
+  ],
+  ignorePatterns: [
+    '.DS_Store',
+    'node_modules',
+    '/build',
+    '/.svelte-kit',
+    '/package',
+    '.env',
+    '.env.*',
+    '!.env.example',
+    // Ignore files for PNPM, NPM and YARN
+    'pnpm-lock.yaml',
+    'package-lock.json',
+    'yarn.lock'
   ]
 };

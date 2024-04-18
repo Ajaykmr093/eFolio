@@ -56,5 +56,5 @@ export const AddBookSchema = z.object({
     book: z.instanceof(File),
     sampleBook: z.instanceof(File)
   }),
-  author: z.string().min(3).max(20)
+  author: z.string().min(3).max(30)
 });

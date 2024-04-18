@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
   import HorizontalScroll from '$lib/components/HorizontalScroll.svelte';
-  import MediaEntry from '$lib/components/MediaEntry.svelte';
+  import MediaItem from '$lib/components/MediaItem.svelte';
   import type { Book } from '$lib/schema/book';
 
-  $: book = $page.data.book as Book;
+  export let data;
+
+  $: book = data.book as Book;
+  $: moreByAuthor = data.moreByAuthor;
 </script>
 
-<div class="m-auto mx-6 my-16 max-w-6xl justify-between xl:mx-auto">
+<div class="m-auto mx-6 my-16 max-w-screen-xl justify-between xl:mx-auto">
   <div class="flex">
     <div class="flex-grow">
       <div class="flex">
@@ -15,26 +18,26 @@
         <div>
           <h1 class="h1 font-bold">{book.title}</h1>
           <div class="mt-1 md:mt-4">
-            <a href="#/" class="anchor font-bold no-underline">[author]</a>
-            <div class="text-xs"><span>{book.publishDate}</span> · [publication]</div>
+            <a href="#/" class="anchor font-bold no-underline">{book.author.name}</a>
+            <div class="text-xs">
+              <span>{new Date(book.publishDate).toLocaleDateString()}</span> · {book.publication}
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="hide-scrollbar mb-6 mt-4 flex h-16 items-stretch overflow-auto whitespace-nowrap py-3"
-      >
+      <div class="hide-scrollbar mb-6 mt-4 flex h-16 items-stretch overflow-auto whitespace-nowrap py-3">
         <div class="flex w-24 flex-col items-center">
           <p class="h-6 text-sm font-bold">[rating]<i class="fa-solid fa-star" /></p>
-          <p class="text-xs">[totalReviews] reviews</p>
+          <p class="text-xs">[n] reviews</p>
         </div>
         <span class="divider-vertical m-2" />
         <div class="flex w-24 flex-col items-center">
           <p class="h-6 text-sm font-bold"><i class="fa-solid fa-book" /></p>
-          <p class="text-xs">[bookType]</p>
+          <p class="text-xs">{book.bookType}</p>
         </div>
         <span class="divider-vertical m-2" />
         <div class="flex w-24 flex-col items-center">
-          <p class="h-6 text-sm font-bold">[totalPages]</p>
+          <p class="h-6 text-sm font-bold">{book.totalPages}</p>
           <p class="text-xs">Pages</p>
         </div>
       </div>
@@ -69,23 +72,13 @@
   </div>
   <div class="mt-16">
     <div class="flex justify-between">
-      <h4 class="h4 font-bold">More by [author]</h4>
+      <h4 class="h4 font-bold">More by {book.author.name}</h4>
       <p><i class="fa-solid fa-chevron-right"></i></p>
     </div>
     <HorizontalScroll>
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
+      {#each moreByAuthor as item}
+        <MediaItem {...item} cover={item.coverUrl} on:click={() => goto(`/book/${item.id}`)} />
+      {/each}
     </HorizontalScroll>
   </div>
   <div class="mt-16">
@@ -94,19 +87,19 @@
       <p><i class="fa-solid fa-chevron-right"></i></p>
     </div>
     <HorizontalScroll>
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
-      <MediaEntry {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
+      <MediaItem {...book} cover={book.coverUrl} />
     </HorizontalScroll>
   </div>
 </div>

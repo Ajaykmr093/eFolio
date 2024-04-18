@@ -14,15 +14,26 @@
 
   export let data;
 
+  $: user = data.user;
+
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
-<Toast />
+<Toast rounded="rounded-xl" />
 <Modal />
 
 <AppShell>
-  <svelte:fragment slot="header"><Appbar user={data.user} /></svelte:fragment>
+  <!-- Appbar -->
+  <svelte:fragment slot="header">
+    <Appbar {user} />
+  </svelte:fragment>
+
+  <!-- Page -->
   <slot />
-  <svelte:fragment slot="pageFooter"><Footer /></svelte:fragment>
+
+  <!-- Footer -->
+  <svelte:fragment slot="pageFooter">
+    <Footer />
+  </svelte:fragment>
 </AppShell>

@@ -7,12 +7,12 @@
   export let data;
 </script>
 
-<header class="bg-surface-200-700-token flex h-70v w-full flex-col items-center justify-center p-4">
+<header class="bg-surface-200-700-token flex h-[70vh] w-full flex-col items-center justify-center p-4">
   <img src={logo} alt="Logo" class="mb-8 h-32 w-32 drop-shadow-lg filter" />
   <h3 class="h3 text-center font-semibold">Carry Your Stories Everywhere with eBook</h3>
   <div class="mt-8 flex flex-row justify-center gap-4">
     {#if !data.user}
-      <a href="/auth/signup" class="variant-filled btn">
+      <a href="/signup" class="variant-filled btn">
         <i class="fa-solid fa-user-plus" />
         <span>Get Started</span>
       </a>
@@ -23,11 +23,9 @@
     </a>
   </div>
 </header>
-<h2 class="h2 my-8 text-center font-bold">Features</h2>
-<div class="mx-4 flex flex-col items-center">
-  <div
-    class="flex w-3/5 flex-col items-center justify-center gap-6 md:w-full md:max-w-screen-xl md:flex-row md:items-stretch"
-  >
+<div class="m-auto max-w-screen-xl p-6 pt-0">
+  <h2 class="h2 my-8 text-center font-bold">Features</h2>
+  <div class="m-auto flex w-3/5 flex-col items-center justify-center gap-6 md:w-full md:flex-row md:items-stretch">
     <div class="card overflow-hidden">
       <header>
         <img src={books} alt="Books" />
@@ -57,34 +55,3 @@
     </div>
   </div>
 </div>
-<hr class="mx-4 mt-12" />
-<h2 class="h2 my-8 text-center font-bold">About</h2>
-<div class="flex flex-col items-center">
-  <div class="flex max-w-screen-lg flex-col items-center justify-center gap-12 px-4">
-    <section>
-      <p class="h6">
-        eBook is a testament to my exploration and learning journey through the realms of eBooks,
-        eCommerce, and web development. Developed as a university project by Ajay, eBook
-        encapsulates my efforts to grasp the intricacies of these domains.
-      </p>
-    </section>
-    <section>
-      <h5 class="h5 font-bold">Learning Objectives:</h5>
-      <p class="h6">
-        As a student eager to expand my knowledge horizon, I chose the topic of eBooks and eCommerce
-        for my project with the aim of gaining hands-on experience in web development, understanding
-        data modeling principles, and exploring the dynamics of digital commerce.
-      </p>
-    </section>
-    <section>
-      <h5 class="h5 font-bold">Behind the Scenes:</h5>
-      <p class="h6">
-        Throughout the development phase of eBook, I dived into the technical intricacies of
-        creating a functional eBook platform. From designing user interfaces to implementing backend
-        functionalities, every line of code and design choice reflects my journey of discovery and
-        learning.
-      </p>
-    </section>
-  </div>
-</div>
-<div class="mb-12"></div>

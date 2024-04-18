@@ -10,9 +10,9 @@ declare namespace App {
   // interface Platform {}
   namespace Superforms {
     type Message = {
-      status: 'error' | 'success' | 'warning';
-      text: string | null | undefined;
-      data: undefined | null | unknown;
+      type: 'error' | 'success' | 'warning';
+      text?: string;
+      data?: { [key: string]: unknown };
     };
   }
 }

@@ -3,10 +3,8 @@
 </script>
 
 <div class="bg-surface-100-800-token border-t border-surface-500/10 text-sm md:text-base">
-  <div class="mx-auto w-full max-w-7xl space-y-10 p-4 py-16 md:py-24">
-    <section
-      class="flex flex-col items-start justify-start space-y-5 md:flex-row md:justify-between md:space-y-0"
-    >
+  <div class="mx-auto w-full max-w-screen-xl space-y-10 p-4 py-16 md:py-24">
+    <section class="flex flex-col items-start justify-start space-y-5 md:flex-row md:justify-between md:space-y-0">
       <div class="grid grid-cols-1 place-content-start place-items-start gap-2">
         <div class="flex gap-2">
           <img src={logo} alt="Logo" class="w-6 object-contain" />

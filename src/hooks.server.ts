@@ -1,31 +1,55 @@
-import { db } from '$lib/db/surreal';
+import { db } from '$lib/server/db/surreal';
 import type { User } from '$lib/schema/user';
-import { type Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 const auth = (async ({ event, resolve }) => {
   const { cookies, locals } = event;
 
+  const routeId = event.route.id;
   const token = cookies.get('token');
-  if (!token) return await resolve(event);
+  let user: User | undefined;
 
-  const authenticated = await db.authenticate(token).catch(async (err) => {
-    console.error(err);
-    console.log('Failed to authentacate user token.');
-  });
-
-  if (!authenticated) {
-    cookies.delete('token', { path: '/' });
-    return await resolve(event);
+  // If token exists then attach user from token to locals
+  if (token) {
+    const authenticated = await db.authenticate(token);
+    if (!authenticated) cookies.delete('token', { path: '/' });
+    user = (await db.info().catch(async () => {
+      cookies.delete('token', { path: '/' });
+    })) as User | undefined;
+    locals.user = user;
   }
 
-  const user = (await db.info().catch(async (err) => {
-    console.error(err);
-    console.log('Failed to get uesr info from token.');
-    cookies.delete('token', { path: '/' });
-  })) as User;
-  locals.user = user;
+  if (routeId?.includes('(authenticated)')) {
+    if (user == undefined) {
+      return redirect(303, '/signin');
+    }
+  }
 
+  if (routeId?.includes('(auth)')) {
+    if (!routeId?.includes('/signout')) {
+      if (user != undefined) {
+        return redirect(303, '/');
+      }
+    }
+  }
+
+  if (routeId?.includes('seller')) {
+    if (user == undefined) {
+      return redirect(303, '/signin');
+    }
+    if (!routeId?.includes('application')) {
+      if (user?.seller_profile == undefined) {
+        return redirect(303, '/seller/application');
+      }
+    }
+  }
+
+  if (routeId?.includes('book/add')) {
+    if (user?.seller_profile == undefined) {
+      return redirect(303, '/seller/application');
+    }
+  }
   return await resolve(event);
 }) satisfies Handle;
 

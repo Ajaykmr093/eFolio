@@ -5,15 +5,15 @@ export type User = z.infer<typeof UserSchema>;
 export const UserSchema = z.object({
   id: z.string(),
   name: z.object({
-    first: z.string().max(20),
-    last: z.string().max(20),
-    full: z.string().max(40)
+    first: z.string().min(1).max(20),
+    last: z.string().min(1).max(20),
+    full: z.string().min(2).max(40)
   }),
   email: z.string().email().max(50),
-  username: z.string().min(4),
-  password: z.string().min(4),
+  username: z.string().min(4).max(30),
+  password: z.string().min(4).max(20),
   created_at: z.date(),
-  seller_profile: z.string().optional()
+  seller_profile: z.string()
 });
 
 export const SignupSchema = UserSchema.pick({

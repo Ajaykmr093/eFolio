@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { AppBar, Avatar, popup } from '@skeletonlabs/skeleton';
+  import { AppBar } from '@skeletonlabs/skeleton';
   import logo from '$lib/assets/logo.png';
   import type { User } from '$lib/schema/user';
-  import { enhance } from '$app/forms';
+  import ProfileMenu from './ProfileMenu.svelte';
 
+  // Exports
   export let user: User | undefined;
-  let initials: string;
-
-  $: if (user) initials = user.name.first[0] + user.name.last[0];
 </script>
 
 <AppBar
@@ -15,74 +13,30 @@
   slotDefault="place-self-center w-full invisible lg:visible flex items-center justify-center"
   slotTrail="place-content-end"
 >
+  <!-- Logo -->
   <svelte:fragment slot="lead">
     <a href="/" class="flex gap-2">
       <img src={logo} alt="Logo" class="w-6 object-contain" />
       <h3 class="h3 font-bold">eBook</h3>
     </a>
   </svelte:fragment>
-  <button
-    class="variant-soft btn w-full max-w-sm justify-start rounded-full hover:variant-soft-primary"
-    title="Search for Books, Authors and More"
-  >
+
+  <!-- Search bar -->
+  <button class="variant-soft btn w-full max-w-sm justify-start rounded-full hover:variant-soft-primary">
     <i class="fa-solid fa-search" />
     <span class="overflow-hidden text-ellipsis opacity-70">Search for Books, Authors and More</span>
   </button>
+
+  <!-- Menu -->
   <svelte:fragment slot="trail">
     <a class="btn-icon lg:hidden" href="/" title="Search">
       <i class="fa-solid fa-search" />
     </a>
+
     {#if user}
-      <div class="relative ml-2 flex items-center">
-        <button use:popup={{ event: 'click', target: 'features' }}>
-          <Avatar {initials} width="w-10" rounded="rounded-full" />
-        </button>
-        <!-- popup -->
-        <div class="card w-60 p-4 shadow-xl" data-popup="features">
-          <nav class="list-nav">
-            <ul>
-              <li>
-                <a href="/profile">
-                  <i class="fa-solid fa-user" />
-                  <span>Profile</span>
-                </a>
-              </li>
-              <li>
-                <a href="/library">
-                  <i class="fa-solid fa-bookmark" />
-                  <span>Library</span>
-                </a>
-              </li>
-              <li>
-                {#if user.seller_profile}
-                  <a href="/seller">
-                    <i class="fa-solid fa-shop" />
-                    <span>Seller Portal</span>
-                  </a>
-                {:else}
-                  <a href="/seller/application">
-                    <i class="fa-solid fa-shop" />
-                    <span>Become a seller</span>
-                  </a>
-                {/if}
-              </li>
-            </ul>
-          </nav>
-          <hr class="my-2" />
-          <form action="/auth/logout" method="post" use:enhance>
-            <button class="variant-filled btn w-full justify-start" type="submit">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <span>Logout</span>
-            </button>
-          </form>
-        </div>
-      </div>
+      <ProfileMenu {user} />
     {:else}
-      <div class="flex items-center">
-        <a class="variant-filled-surface btn-icon w-10" href="/auth/signup">
-          <i class="fa-solid fa-user" />
-        </a>
-      </div>
+      <a href="/signin" class="variant-filled btn">Sign in</a>
     {/if}
   </svelte:fragment>
 </AppBar>
