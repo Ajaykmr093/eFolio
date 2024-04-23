@@ -2,6 +2,7 @@ import { db } from '$lib/server/db/surreal';
 import type { User } from '$lib/schema/user';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import { isSellerApproved } from '$lib/helpers/isSellerApproved';
 
 const auth = (async ({ event, resolve }) => {
   const { cookies, locals } = event;
@@ -38,14 +39,19 @@ const auth = (async ({ event, resolve }) => {
     if (user == undefined) {
       return redirect(303, '/signin');
     } else if (!routeId?.includes('application')) {
-      if (user?.seller_profile == undefined) {
+      const approved = await isSellerApproved(user.id);
+      if (!approved) {
         return redirect(303, '/seller/application');
       }
     }
   }
 
   if (routeId?.includes('book/add')) {
-    if (user?.seller_profile == undefined) {
+    if (user == undefined) {
+      return redirect(303, '/signin');
+    }
+    const approved = await isSellerApproved(user.id);
+    if (!approved) {
       return redirect(303, '/seller/application');
     }
   }
