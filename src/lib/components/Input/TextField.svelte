@@ -20,7 +20,7 @@
   {#if multiline}
     <textarea class="input" aria-invalid={hasErrors} {...$$restProps} bind:value on:input />
   {:else}
-    <input class="input" aria-invalid={hasErrors} {...$$restProps} type="text" bind:value on:input />
+    <input class="input" aria-invalid={hasErrors} {...$$restProps} bind:value on:input />
   {/if}
 
   <!-- Description -->
