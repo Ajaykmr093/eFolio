@@ -21,7 +21,7 @@
           <li><a href="/" class="anchor">Profile</a></li>
         </ul>
         <ul class="space-y-3">
-          <li><a href="/" class="anchor">Admin portal</a></li>
+          <li><a href="/admin/signin" class="anchor">Admin portal</a></li>
           <li><a href="/seller/application" class="anchor">Become a seller</a></li>
           <li><a href="/seller" class="anchor">Seller portal</a></li>
         </ul>
