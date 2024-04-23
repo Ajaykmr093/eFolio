@@ -2,7 +2,7 @@
   import { AppBar } from '@skeletonlabs/skeleton';
   import logo from '$lib/assets/logo.png';
   import type { User } from '$lib/schema/user';
-  import ProfileMenu from './ProfileMenu.svelte';
+  import Menu from './Menu.svelte';
 
   // Exports
   export let user: User | undefined;
@@ -34,7 +34,7 @@
     </a>
 
     {#if user}
-      <ProfileMenu {user} />
+      <Menu {user} />
     {:else}
       <a href="/signin" class="variant-filled btn">Sign in</a>
     {/if}
