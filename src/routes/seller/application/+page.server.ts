@@ -2,13 +2,13 @@ import { fail, message, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { redirect, type Actions } from '@sveltejs/kit';
-import { SellerApplicationSchema } from '$lib/schema/seller';
+import { SellerApplicationPostSchema } from '$lib/schema/seller';
 import { db } from '$lib/server/db/surreal';
 import { unlink } from 'fs/promises';
 import { uploadFile } from '$lib/helpers/uploadFile';
 
 export const load = (async ({ locals }) => {
-  const form = await superValidate(zod(SellerApplicationSchema));
+  const form = await superValidate(zod(SellerApplicationPostSchema));
   const uid = locals.user!.id;
 
   const st = `
@@ -26,7 +26,7 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
   apply: async ({ locals, request }) => {
-    const form = await superValidate(request, zod(SellerApplicationSchema));
+    const form = await superValidate(request, zod(SellerApplicationPostSchema));
     if (!form.valid) return fail(400, { form });
 
     let documentPath: string | undefined;
