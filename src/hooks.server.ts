@@ -8,10 +8,7 @@ const auth = (async ({ event, resolve }) => {
 
   const routeId = event.route.id;
   const token = cookies.get('token');
-  const adminToken = cookies.get('adminToken');
-
   let user: User | undefined;
-  let isAdmin: boolean | undefined;
 
   // If token exists then attach user from token to locals
   if (token) {
@@ -21,20 +18,6 @@ const auth = (async ({ event, resolve }) => {
       cookies.delete('token', { path: '/' });
     })) as User | undefined;
     locals.user = user;
-  }
-
-  // If adminToken exists then attach isAdmin to locals
-  if (adminToken) {
-    const authenticated = await db.authenticate(adminToken);
-    if (!authenticated) cookies.delete('adminToken', { path: '/' });
-    isAdmin = await db
-      .info()
-      .then(() => true)
-      .catch(async () => {
-        cookies.delete('adminToken', { path: '/' });
-        return false;
-      });
-    locals.isAdmin = isAdmin;
   }
 
   if (routeId?.includes('(authenticated)')) {
@@ -64,16 +47,6 @@ const auth = (async ({ event, resolve }) => {
   if (routeId?.includes('book/add')) {
     if (user?.seller_profile == undefined) {
       return redirect(303, '/seller/application');
-    }
-  }
-
-  if (routeId?.includes('admin')) {
-    if (routeId?.includes('signin')) {
-      if (isAdmin) {
-        return redirect(303, '/admin');
-      }
-    } else if (!isAdmin) {
-      return redirect(303, '/admin/signin');
     }
   }
   return await resolve(event);

@@ -4,7 +4,6 @@
 declare namespace App {
   interface Locals {
     user: import('$lib/schema/user').User | undefined;
-    isAdmin: boolean;
   }
   // interface PageData {}
   // interface Error {}
