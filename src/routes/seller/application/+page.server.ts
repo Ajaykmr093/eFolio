@@ -12,8 +12,8 @@ export const load = (async ({ locals }) => {
   const uid = locals.user!.id;
 
   const st = `
-    $res = SELECT application_status, remark FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;
-    $res['application_status'];
+    $res = SELECT status, remark FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;
+    $res['status'];
     $res['remark'];
   `;
 
