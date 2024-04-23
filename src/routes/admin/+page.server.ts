@@ -10,7 +10,6 @@ export const load = (async () => {
   `;
   const result = await db.query<[SellerApplication[]]>(st);
   const applications = result[0];
-  console.log(applications);
   return { applications };
 }) satisfies PageServerLoad;
 

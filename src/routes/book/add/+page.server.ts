@@ -36,8 +36,6 @@ export const actions = {
       const bookType = path.extname(bookPath);
       const vars = { pricing, book, publication, author, coverPath, sampleBookPath, bookPath, bookType };
 
-      console.log(vars);
-
       const st = `
         {
           let $b = create only book content {
