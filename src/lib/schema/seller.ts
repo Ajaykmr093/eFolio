@@ -9,7 +9,7 @@ export const SellerSchema = z.object({
   email: z.string().email().max(50)
 });
 
-export const SellerApplicationPostSchema = SellerSchema.omit({ id: true }).extend({
+export const SubmitSellerApplicationSchema = SellerSchema.omit({ id: true }).extend({
   document: z.instanceof(File),
   password: z.string()
 });

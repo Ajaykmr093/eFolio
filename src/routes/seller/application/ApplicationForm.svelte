@@ -1,18 +1,18 @@
 <script lang="ts">
   import { FileField, TextField } from '$lib/components/Input';
-  import { SellerApplicationPostSchema } from '$lib/schema/seller';
+  import { SubmitSellerApplicationSchema } from '$lib/schema/seller';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { zodClient, type Infer } from 'sveltekit-superforms/adapters';
   import { fileProxy, superForm, type SuperValidated } from 'sveltekit-superforms/client';
 
-  type ApplicationForm = SuperValidated<Infer<typeof SellerApplicationPostSchema>>;
+  type ApplicationForm = SuperValidated<Infer<typeof SubmitSellerApplicationSchema>>;
 
   // Locals
   const toastStore = getToastStore();
   export let applicationForm: ApplicationForm;
 
   const { form, enhance, errors } = superForm(applicationForm, {
-    validators: zodClient(SellerApplicationPostSchema),
+    validators: zodClient(SubmitSellerApplicationSchema),
     dataType: 'json',
     onUpdated({ form }) {
       if (form.message?.type == 'error') {
