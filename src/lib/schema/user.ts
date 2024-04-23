@@ -13,7 +13,8 @@ export const UserSchema = z.object({
   username: z.string().min(4).max(30),
   password: z.string().min(4).max(20),
   created_at: z.date(),
-  seller_profile: z.string()
+  seller_profile: z.string(),
+  isAdmin: z.boolean()
 });
 
 export const SignupSchema = UserSchema.pick({

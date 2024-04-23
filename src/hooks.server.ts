@@ -49,6 +49,12 @@ const auth = (async ({ event, resolve }) => {
       return redirect(303, '/seller/application');
     }
   }
+
+  if (routeId?.includes('admin')) {
+    if (!user?.isAdmin) {
+      return redirect(303, '/signin');
+    }
+  }
   return await resolve(event);
 }) satisfies Handle;
 

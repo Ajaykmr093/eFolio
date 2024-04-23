@@ -42,6 +42,13 @@
             </a>
           {/if}
         </li>
+        {#if user.isAdmin}
+          <li>
+            <a href="/admin">
+              <i class="fa-solid fa-user-tie" />
+              <span>Admin Portal</span>
+            </a>
+          </li>{/if}
       </ul>
     </nav>
     <hr class="my-2" />
