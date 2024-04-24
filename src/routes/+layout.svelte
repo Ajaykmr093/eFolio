@@ -28,7 +28,7 @@ const modalRegistry: Record<string, ModalComponent> = {
 </script>
 
 <Toast rounded="rounded-xl" />
-<Modal {modalRegistry} />
+<Modal components={modalRegistry} />
 
 <AppShell>
   <!-- Appbar -->
