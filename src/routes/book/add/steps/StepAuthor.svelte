@@ -14,8 +14,8 @@
   const modalStore = getModalStore();
 
   const modal: ModalSettings = {
-    type: 'component',
-    component: { ref: AuthorSelectionModal },
+    type: 'component',    
+	  component: 'authorSelectionModal',
     title: 'Select Author',
     meta: { searchAuthorForm, addAuthorForm },
     response: (r) => {

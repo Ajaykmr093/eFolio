@@ -5,12 +5,13 @@
   import '@fortawesome/fontawesome-free/css/brands.css';
   import '@fortawesome/fontawesome-free/css/solid.css';
 
-  import { AppShell, initializeStores, Modal, Toast } from '@skeletonlabs/skeleton';
+  import { AppShell, initializeStores, Modal, Toast, type ModalComponent } from '@skeletonlabs/skeleton';
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
   import { storePopup } from '@skeletonlabs/skeleton';
 
   import Appbar from '$lib/components/MainAppbar.svelte';
   import Footer from '$lib/components/MainFooter.svelte';
+    import AuthorSelectionModal from './book/add/modal/AuthorSelectionModal.svelte';
 
   export let data;
 
@@ -19,10 +20,15 @@
 
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+
+const modalRegistry: Record<string, ModalComponent> = {
+	authorSelectionModal: { ref: AuthorSelectionModal },
+};
 </script>
 
 <Toast rounded="rounded-xl" />
-<Modal />
+<Modal {modalRegistry} />
 
 <AppShell>
   <!-- Appbar -->
