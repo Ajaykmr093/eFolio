@@ -16,9 +16,9 @@
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
         <ul class="space-y-3">
           <li><a href="/" class="anchor">Home</a></li>
-          <li><a href="/" class="anchor">Explore</a></li>
-          <li><a href="/" class="anchor">Your Library</a></li>
-          <li><a href="/" class="anchor">Profile</a></li>
+          <li><a href="/books" class="anchor">Explore</a></li>
+          <li><a href="/library" class="anchor">Your Library</a></li>
+          <li><a href="/profile" class="anchor">Profile</a></li>
         </ul>
         <ul class="space-y-3">
           <li><a href="/admin" class="anchor">Admin portal</a></li>

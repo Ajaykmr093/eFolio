@@ -24,8 +24,6 @@ export const load = (async () => {
     booksByRandomAuthor
   ] = result;
 
-  console.log(result);
-
   return {
     newlyAddedBooks,
     randomlySelectedBooks,
