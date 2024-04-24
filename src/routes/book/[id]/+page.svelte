@@ -44,8 +44,10 @@
       </div>
       <div class="flex flex-col gap-2 md:flex-row">
         <div class="flex flex-row gap-2">
-          <button class="variant-filled-primary btn flex-1 md:flex-initial">Buy</button>
-          <button class="variant-soft-primary btn flex-1 md:flex-initial">Free sample</button>
+          <button class="variant-filled-primary btn flex-1 md:flex-initial" on:click={() => goto('/buy')}>Buy</button>
+          <a class="variant-soft-primary btn flex-1 md:flex-initial" href={book.sampleUrl} target="_blank"
+            >Free sample</a
+          >
         </div>
         <button class="variant-soft btn">
           <i class="fa-solid fa-heart"></i>

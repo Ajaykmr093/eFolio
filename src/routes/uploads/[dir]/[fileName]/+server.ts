@@ -2,8 +2,8 @@ import path from 'path';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {
-  const { fileName } = params;
-  const filePath = path.resolve('uploads/covers', fileName);
+  const { fileName, dir } = params;
+  const filePath = path.resolve(`uploads/${dir}`, fileName);
   const file = Bun.file(filePath);
   const data = await file.arrayBuffer();
   const contentType = file.type;
