@@ -63,6 +63,18 @@ const auth = (async ({ event, resolve }) => {
       return redirect(303, '/signin');
     }
   }
+
+  if (routeId?.includes('book/[id]/buy')) {
+    if (user == undefined) {
+      return redirect(303, '/signin');
+    }
+  }
+
+  if (routeId?.includes('library')) {
+    if (user == undefined) {
+      return redirect(303, '/signin');
+    }
+  }
   return await resolve(event);
 }) satisfies Handle;
 
