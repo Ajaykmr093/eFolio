@@ -44,10 +44,14 @@
       </div>
       <div class="flex flex-col gap-2 md:flex-row">
         <div class="flex flex-row gap-2">
-          <button
-            class="variant-filled-primary btn flex-1 md:flex-initial"
-            on:click={() => goto(`/book/${book.id}/buy`)}>Buy</button
-          >
+          {#if book.bookUrl}
+            <a class="variant-filled-primary btn flex-1 md:flex-initial" href={book.bookUrl} target="_blank">View</a>
+          {:else}
+            <button
+              class="variant-filled-primary btn flex-1 md:flex-initial"
+              on:click={() => goto(`/book/${book.id}/buy`)}>Buy</button
+            >
+          {/if}
           <a class="variant-soft-primary btn flex-1 md:flex-initial" href={book.sampleUrl} target="_blank"
             >Free sample</a
           >
