@@ -12,8 +12,8 @@ export const load = (async ({ params, locals }) => {
 
   const stripe = new Stripe(SECRET_STRIPE_KEY);
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: Math.ceil(book.price - book.price * (book.discount / 100)),
     currency: 'inr',
+    amount: Math.ceil(book.price - book.price * (book.discount / 100)) * 100,
     description: `Purchased ${book.title}.`,
     automatic_payment_methods: {
       enabled: true
