@@ -3,7 +3,7 @@
   import type { Infer, SuperForm } from 'sveltekit-superforms/client';
   import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import AuthorSelectionModal from '../modal/AuthorSelectionModal.svelte';
-  import type { AddBookSchema } from '$lib/schema/book';
+  import type { AddBookSchema } from '$lib/schema/Book';
 
   // Get Context
   const sf: SuperForm<Infer<typeof AddBookSchema>> = getContext('addBookSf');

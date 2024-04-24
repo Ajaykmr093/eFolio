@@ -10,8 +10,8 @@
   export let data: PageData;
 
   // Reactive
-  $: remark = data.remark ?? 'No Remark';
-  $: applicationStatus = data.applicationStatus;
+  $: remark = data.application?.remark ?? 'No Remark';
+  $: applicationStatus = data.application?.applicationStatus;
   $: title = applicationStatus == null ? 'Apply for seller account' : 'Application status';
 </script>
 

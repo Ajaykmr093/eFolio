@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { SellerSchema } from './seller';
-import { AuthorSchema } from './author';
+import { SellerSchema } from './Seller';
+import { AuthorSchema } from './Author';
 
 export type Book = z.infer<typeof BookSchema>;
 
@@ -30,8 +30,8 @@ export const BookSchema = z.object({
     .default('' as unknown as number),
   bookUrl: z.string().min(3).max(250),
   bookType: z.string().min(2).max(10),
-  seller: SellerSchema,
-  author: AuthorSchema
+  seller: z.string().or(SellerSchema),
+  author: z.string().or(AuthorSchema)
 });
 
 export const AddBookSchema = z.object({
@@ -56,5 +56,5 @@ export const AddBookSchema = z.object({
     book: z.instanceof(File),
     sampleBook: z.instanceof(File)
   }),
-  author: z.string().min(3).max(30)
+  author: z.string()
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { TextField, FileField } from '$lib/components/Input';
-  import { AddAuthorSchema } from '$lib/schema/author';
+  import { AddAuthorSchema } from '$lib/schema/Author';
   import { getModalStore, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import type { SvelteComponent } from 'svelte';
   import { zodClient } from 'sveltekit-superforms/adapters';

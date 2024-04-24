@@ -8,7 +8,7 @@
   import StepPricing from './StepPricing.svelte';
   import StepPublication from './StepPublication.svelte';
   import StepResources from './StepResources.svelte';
-  import type { AddBookSchema } from '$lib/schema/book';
+  import type { AddBookSchema } from '$lib/schema/Book';
 
   // Get Context
   const sf: SuperForm<Infer<typeof AddBookSchema>> = getContext('addBookSf');

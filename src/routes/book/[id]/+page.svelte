@@ -2,11 +2,12 @@
   import { goto } from '$app/navigation';
   import HorizontalScroll from '$lib/components/HorizontalScroll.svelte';
   import MediaItem from '$lib/components/MediaItem.svelte';
-  import type { Book } from '$lib/schema/book';
+  import type { Author } from '$lib/schema/Author';
 
   export let data;
 
-  $: book = data.book as Book;
+  $: book = data.book;
+  $: author = book.author as Author;
   $: moreByAuthor = data.moreByAuthor;
 </script>
 
@@ -18,7 +19,7 @@
         <div>
           <h1 class="h1 font-bold">{book.title}</h1>
           <div class="mt-1 md:mt-4">
-            <a href="#/" class="anchor font-bold no-underline">{book.author.name}</a>
+            <a href="#/" class="anchor font-bold no-underline">{author.name}</a>
             <div class="text-xs">
               <span>{new Date(book.publishDate).toLocaleDateString()}</span> · {book.publication}
             </div>
@@ -72,7 +73,7 @@
   </div>
   <div class="mt-16">
     <div class="flex justify-between">
-      <h4 class="h4 font-bold">More by {book.author.name}</h4>
+      <h4 class="h4 font-bold">More by {author.name}</h4>
       <p><i class="fa-solid fa-chevron-right"></i></p>
     </div>
     <HorizontalScroll>

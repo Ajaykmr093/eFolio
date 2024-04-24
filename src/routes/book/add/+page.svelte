@@ -4,7 +4,7 @@
 
   import AddBookStepper from './steps/AddBookStepper.svelte';
   import { setContext } from 'svelte';
-  import { AddBookSchema } from '$lib/schema/book';
+  import { AddBookSchema } from '$lib/schema/Book';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import { goto } from '$app/navigation';
 

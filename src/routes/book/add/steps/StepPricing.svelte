@@ -1,6 +1,6 @@
 <script lang="ts">
   import { NumberField } from '$lib/components/Input';
-  import type { AddBookSchema } from '$lib/schema/book';
+  import type { AddBookSchema } from '$lib/schema/Book';
   import { getContext } from 'svelte';
   import type { Infer, SuperForm } from 'sveltekit-superforms/client';
 

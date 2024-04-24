@@ -15,6 +15,7 @@
   export let data;
 
   $: user = data.user;
+  $: isSeller = data.isSeller;
 
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -26,7 +27,7 @@
 <AppShell>
   <!-- Appbar -->
   <svelte:fragment slot="header">
-    <Appbar {user} />
+    <Appbar {user} {isSeller} />
   </svelte:fragment>
 
   <!-- Page -->

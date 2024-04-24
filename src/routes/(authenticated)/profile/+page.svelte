@@ -7,7 +7,7 @@
 
   $: user = data.user!;
   $: initials = user.name.first[0] + user.name.last[0];
-  $: joinDate = new Date(user.created_at).toLocaleDateString();
+  $: joinDate = new Date(user.createdAt).toLocaleDateString();
 </script>
 
 <div class="flex h-dvh w-full items-center justify-center">

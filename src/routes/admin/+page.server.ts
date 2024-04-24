@@ -1,12 +1,12 @@
-import type { SellerApplication } from '$lib/schema/seller';
+import type { SellerApplication } from '$lib/schema/SellerApplication';
 import { db } from '$lib/server/db/surreal';
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
   const st = `
-    select id, out.name as name, out.email as email, document
-    from applies_to_become where status = 'pending';
+    SELECT *, in[*] AS user, out[*] AS seller OMIT in, out
+    FROM applies_to_become WHERE applicationStatus = 'pending';
   `;
   const result = await db.query<[SellerApplication[]]>(st);
   const applications = result[0];
@@ -15,10 +15,10 @@ export const load = (async () => {
 
 export const actions: Actions = {
   approve: async ({ request }) => {
-    await approveOrReject(request, 'approve');
+    await approveOrReject(request, 'approved');
   },
   reject: async ({ request }) => {
-    await approveOrReject(request, 'reject');
+    await approveOrReject(request, 'rejected');
   }
 };
 
@@ -27,7 +27,7 @@ async function approveOrReject(request: Request, action: string) {
   const id = data.get('id');
   const remark = data.get('remark');
 
-  const st = `update $id set remark = $remark, status = $action`;
+  const st = `update $id set remark = $remark, applicationStatus = $action`;
   await db.query(st, { id, remark, action });
   return redirect(303, '#');
 }

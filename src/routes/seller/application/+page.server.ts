@@ -2,34 +2,24 @@ import { fail, message, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { redirect, type Actions } from '@sveltejs/kit';
-import { SubmitSellerApplicationSchema } from '$lib/schema/seller';
+import { BecomeSellerSchema } from '$lib/schema/Seller';
 import { db } from '$lib/server/db/surreal';
-import { unlink } from 'fs/promises';
 import { uploadFile } from '$lib/helpers/uploadFile';
+import type { SellerApplication } from '$lib/schema/SellerApplication';
 
 export const load = (async ({ locals }) => {
-  const form = await superValidate(zod(SubmitSellerApplicationSchema));
+  const form = await superValidate(zod(BecomeSellerSchema));
   const uid = locals.user!.id;
-
-  const st = `
-    $res = SELECT status, remark FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;
-    $res['status'];
-    $res['remark'];
-  `;
-
-  const result = await db.query<[null, string | null, string | null]>(st, { uid });
-  const applicationStatus = result[1];
-  const remark = result[2];
-
-  return { form, applicationStatus, remark };
+  const st = `SELECT * FROM ONLY applies_to_become WHERE in = $uid LIMIT 1;`;
+  const result = await db.query<[SellerApplication | null]>(st, { uid });
+  const application = result[0];
+  return { form, application };
 }) satisfies PageServerLoad;
 
 export const actions = {
   apply: async ({ locals, request }) => {
-    const form = await superValidate(request, zod(SubmitSellerApplicationSchema));
+    const form = await superValidate(request, zod(BecomeSellerSchema));
     if (!form.valid) return fail(400, { form });
-
-    let documentPath: string | undefined;
 
     try {
       const documentPath = await uploadFile(form.data.document, 'document/');
@@ -45,8 +35,6 @@ export const actions = {
       } else if (errMsg.includes(credsErrMsg)) {
         return message(form, { type: 'error', text: credsErrMsg }, { status: 401 });
       }
-
-      if (documentPath) await unlink(documentPath);
       throw err;
     }
 

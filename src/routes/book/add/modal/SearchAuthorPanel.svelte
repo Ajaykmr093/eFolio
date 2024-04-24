@@ -1,7 +1,7 @@
 <script lang="ts">
   import { superForm, type SuperValidated } from 'sveltekit-superforms/client';
   import { zodClient, type Infer } from 'sveltekit-superforms/adapters';
-  import { SearchAuthorSchema, type Author } from '$lib/schema/author';
+  import { SearchAuthorSchema, type Author } from '$lib/schema/Author';
   import { getModalStore, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
   import AuthorItem from '$lib/components/AuthorItem.svelte';
   import type { SvelteComponent } from 'svelte';

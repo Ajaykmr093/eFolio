@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { AddAuthorSchema, type Author } from '$lib/schema/author';
+import { AddAuthorSchema, type Author } from '$lib/schema/Author';
 import { db } from '$lib/server/db/surreal';
 import { z } from 'zod';
 

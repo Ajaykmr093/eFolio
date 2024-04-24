@@ -1,4 +1,4 @@
-import { SignupSchema } from '$lib/schema/user';
+import { SignupSchema } from '$lib/schema/User';
 import { zod, type Infer } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad, Actions } from './$types';
 import { fail, message, setError, superValidate, type SuperValidated } from 'sveltekit-superforms';

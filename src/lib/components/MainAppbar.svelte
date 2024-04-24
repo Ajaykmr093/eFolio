@@ -1,11 +1,12 @@
 <script lang="ts">
   import { AppBar } from '@skeletonlabs/skeleton';
   import logo from '$lib/assets/logo.png';
-  import type { User } from '$lib/schema/user';
+  import type { User } from '$lib/schema/User';
   import Menu from './Menu.svelte';
 
   // Exports
   export let user: User | undefined;
+  export let isSeller: boolean;
 </script>
 
 <AppBar
@@ -34,7 +35,7 @@
     </a>
 
     {#if user}
-      <Menu {user} />
+      <Menu {user} {isSeller} />
     {:else}
       <a href="/signin" class="variant-filled btn">Sign in</a>
     {/if}

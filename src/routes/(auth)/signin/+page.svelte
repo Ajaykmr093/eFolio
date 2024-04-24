@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { LoginSchema } from '$lib/schema/user';
+  import { LoginSchema } from '$lib/schema/User';
   import { Checkbox, TextField } from '$lib/components/Input';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 

@@ -1,13 +1,10 @@
 import type { PageServerLoad } from './$types';
-import type { Book } from '$lib/schema/book';
+import type { Book } from '$lib/schema/Book';
 import { db } from '$lib/server/db/surreal';
 
-export const load = (async ({ locals }) => {
-  const st = `
-    SELECT price, discount, out.title AS title, out.coverUrl AS coverUrl, meta::id(out.id) AS id
-    FROM (SELECT value ->sells FROM only $seller);
-  `;
-  const result = await db.query<[Book[]]>(st, { seller: locals.user?.seller_profile });
+export const load = (async () => {
+  const st = `SELECT * from book where seller = fn::approved_seller_from_auth();`;
+  const result = await db.query<[Book[]]>(st);
   const entries = result[0];
   return { entries };
 }) satisfies PageServerLoad;

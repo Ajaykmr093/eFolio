@@ -12,8 +12,7 @@ export const UserSchema = z.object({
   email: z.string().email().max(50),
   username: z.string().min(4).max(30),
   password: z.string().min(4).max(20),
-  created_at: z.date(),
-  seller_profile: z.string(),
+  createdAt: z.date(),
   isAdmin: z.boolean()
 });
 

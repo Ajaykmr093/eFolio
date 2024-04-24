@@ -1,9 +1,11 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import type { User } from '$lib/schema/user';
+  import type { User } from '$lib/schema/User';
   import { Avatar, popup } from '@skeletonlabs/skeleton';
 
   export let user: User;
+  export let isSeller: boolean;
+
   let initials: string;
   $: if (user) initials = user.name.first[0] + user.name.last[0];
 </script>
@@ -30,7 +32,7 @@
           </a>
         </li>
         <li>
-          {#if user.seller_profile}
+          {#if isSeller}
             <a href="/seller">
               <i class="fa-solid fa-shop" />
               <span>Seller Portal</span>

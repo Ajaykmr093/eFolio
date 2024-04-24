@@ -1,7 +1,7 @@
 <script lang="ts">
   import { superForm } from 'sveltekit-superforms/client';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { SignupSchema } from '$lib/schema/user';
+  import { SignupSchema } from '$lib/schema/User.js';
   import { TextField } from '$lib/components/Input';
   import { debounce } from 'throttle-debounce';
   import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';

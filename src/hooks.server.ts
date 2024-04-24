@@ -1,8 +1,7 @@
+import type { User } from '$lib/schema/User';
 import { db } from '$lib/server/db/surreal';
-import type { User } from '$lib/schema/user';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import { isSellerApproved } from '$lib/helpers/isSellerApproved';
 
 const auth = (async ({ event, resolve }) => {
   const { cookies, locals } = event;
@@ -10,6 +9,7 @@ const auth = (async ({ event, resolve }) => {
   const routeId = event.route.id;
   const token = cookies.get('token');
   let user: User | undefined;
+  let isSeller = false;
 
   // If token exists then attach user from token to locals
   if (token) {
@@ -19,6 +19,10 @@ const auth = (async ({ event, resolve }) => {
       cookies.delete('token', { path: '/' });
     })) as User | undefined;
     locals.user = user;
+
+    const result = await db.query<[boolean]>('fn::approved_seller_from_auth() != NONE');
+    isSeller = result[0];
+    locals.isSeller = isSeller;
   }
 
   if (routeId?.includes('(authenticated)')) {
@@ -39,8 +43,7 @@ const auth = (async ({ event, resolve }) => {
     if (user == undefined) {
       return redirect(303, '/signin');
     } else if (!routeId?.includes('application')) {
-      const approved = await isSellerApproved(user.id);
-      if (!approved) {
+      if (!isSeller) {
         return redirect(303, '/seller/application');
       }
     }
@@ -50,8 +53,7 @@ const auth = (async ({ event, resolve }) => {
     if (user == undefined) {
       return redirect(303, '/signin');
     }
-    const approved = await isSellerApproved(user.id);
-    if (!approved) {
+    if (!isSeller) {
       return redirect(303, '/seller/application');
     }
   }

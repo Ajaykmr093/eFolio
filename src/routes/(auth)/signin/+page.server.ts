@@ -2,7 +2,7 @@ import { redirect, type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
-import { LoginSchema } from '$lib/schema/user';
+import { LoginSchema } from '$lib/schema/User';
 import { db } from '$lib/server/db/surreal';
 
 export const load = (async () => {
