@@ -90,7 +90,7 @@ DEFINE FIELD price ON book TYPE float PERMISSIONS FOR select FULL, FOR create WH
 DEFINE FIELD publication ON book TYPE string PERMISSIONS FOR select FULL, FOR create WHERE fn::approved_seller_from_auth() != NONE, FOR update WHERE seller == fn::approved_seller_from_auth(), FOR delete NONE;
 DEFINE FIELD publishDate ON book TYPE datetime PERMISSIONS FOR select FULL, FOR create WHERE fn::approved_seller_from_auth() != NONE, FOR update WHERE seller == fn::approved_seller_from_auth(), FOR delete NONE;
 DEFINE FIELD sampleUrl ON book TYPE string PERMISSIONS FOR select FULL, FOR create WHERE fn::approved_seller_from_auth() != NONE, FOR update WHERE seller == fn::approved_seller_from_auth(), FOR delete NONE;
-DEFINE FIELD seller ON book TYPE record<seller> DEFAULT fn::approved_seller_from_auth() ASSERT $value == fn::approved_seller_from_auth() PERMISSIONS FOR select FULL, FOR create WHERE $this == fn::approved_seller_from_auth(), FOR update, delete NONE;
+DEFINE FIELD seller ON book TYPE record<seller> DEFAULT fn::approved_seller_from_auth() ASSERT $value == fn::approved_seller_from_auth() PERMISSIONS FOR create, select FULL, FOR update, delete NONE;
 DEFINE FIELD title ON book TYPE string PERMISSIONS FOR select FULL, FOR create WHERE fn::approved_seller_from_auth() != NONE, FOR update WHERE seller == fn::approved_seller_from_auth(), FOR delete NONE;
 DEFINE FIELD totalPages ON book TYPE number PERMISSIONS FOR select FULL, FOR create WHERE fn::approved_seller_from_auth() != NONE, FOR update WHERE seller == fn::approved_seller_from_auth(), FOR delete NONE;
 
