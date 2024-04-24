@@ -4,7 +4,7 @@ import { db } from '$lib/server/db/surreal';
 
 export const load = (async ({ params }) => {
   const st = `
-    LET $book = (SELECT *, author[*] FROM ONLY book:1vov3uei3itih5dv09xd);
+    LET $book = (SELECT *, author[*] FROM ONLY $bookId);
     RETURN $book;
     SELECT *, author[*] FROM book WHERE author = $book.author.id AND id != $bookId LIMIT 10;
   `;

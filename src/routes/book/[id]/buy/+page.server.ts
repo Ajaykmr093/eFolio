@@ -4,19 +4,23 @@ import { db } from '$lib/server/db/surreal';
 import Stripe from 'stripe';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ params }) => {
-  const st = `SELECT * FROM ONLY book:1vov3uei3itih5dv09xd;`;
+export const load = (async ({ params, locals }) => {
+  const st = `SELECT * FROM ONLY $bookId;`;
   const bookId = params.id;
   const result = await db.query<[Book]>(st, { bookId });
   const book = result[0];
 
   const stripe = new Stripe(SECRET_STRIPE_KEY);
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: Math.ceil(book.price - (book.price * (book.discount / 100))),
+    amount: Math.ceil(book.price - book.price * (book.discount / 100)),
     currency: 'inr',
     description: `Purchased ${book.title}.`,
     automatic_payment_methods: {
       enabled: true
+    },
+    metadata: {
+      productId: book.id,
+      userId: locals.user.id
     }
   });
 

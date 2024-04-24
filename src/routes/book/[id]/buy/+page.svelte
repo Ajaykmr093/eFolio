@@ -53,7 +53,7 @@
       <Elements {stripe} {clientSecret} bind:elements>
         <form on:submit|preventDefault={submit}>
           <PaymentElement />
-          <Address mode='billing' />
+          <Address mode="billing" />
           <button class="variant-filled btn mt-4 w-full" disabled={processing}>
             {#if processing}
               Processing...
