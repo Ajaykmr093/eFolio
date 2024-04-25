@@ -21,7 +21,7 @@
         <s>₹{price}</s>
       {/if}
       <span class="mx-1">
-        ₹{price - price * (discount / 100)}
+        ₹{(price - price * (discount / 100)).toFixed(2)}
       </span>
     </p>
   </div>
